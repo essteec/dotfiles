@@ -1,0 +1,51 @@
+configuration {
+    modi: "drun";
+    font: "JetBrainsMono Nerd Font 14";
+    show-icons: true;
+    icon-theme: "Papirus";
+    display-drun: "Applications";
+    location: 3; /* 0=center, 1=top-left, 2=top-right, 3=bottom-left, 4=bottom-right */
+    yoffset: 80; /* move slightly up from the corner */
+    xoffset: -80; /* move slightly left from the corner */
+}
+
+inputbar {
+    enabled: false;
+}
+
+* {
+    background-color: #181825; /* dark background */
+    text-color: #f5e0dc;       /* light text */
+    selected-text-color: #181825;
+    border-color: #79107cff;     /* pinkish border */
+}
+
+window {
+    width: 22%;
+    border: 2px;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+mainbox {
+    spacing: 15px;
+}
+
+listview {
+    columns: 1;
+    spacing: 6px;
+    fixed-height: true;
+    lines: 4;
+}
+
+element {
+    border-radius: 8px;
+    padding: 6px;
+}
+
+element selected {
+    background-color: linear-gradient(to right, #79107cff, #f9e2af);
+    text-color: #181825;
+    border: 1px;
+    border-color: #79107cff;
+}
