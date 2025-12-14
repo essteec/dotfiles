@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+selected="${1:-2}"
+
 player="$(~/.config/rofi/media-player/switch-target-player.sh 0)"
 
 status_function () {
@@ -34,15 +36,6 @@ aprime=""
 # pause button: ||  
 # play button: > 
 
-# case "$(playerctl --player="$player" status)" in
-#     "Playing")
-#         toggle=""
-#         ;;
-#     "Paused")
-#         toggle=""
-#         ;;
-# esac
-# changed to:
 toggle=""
 if [[ "$(playerctl --player="$player" status)" == "Playing" ]]; then
     toggle=""
@@ -92,34 +85,42 @@ if [[ "$player" == "spotify" || "$player" == "vlc" ]]; then
     options+="\n$shuffle\n$repeat"
 fi
 
-chosen="$(echo -e "$options" | rofi -show -mesg "${status^}" -dmenu -selected-row 2 -theme ~/.config/rofi/themes/media_player.rasi)"
+chosen="$(echo -e "$options" | rofi -show -mesg "${status^}" -dmenu -kb-accept-entry "space,Return,KP_Enter" -kb-cancel "Escape,Super_L+m" -selected-row "$selected" -theme ~/.config/rofi/themes/media_player.rasi)"
 
 [[ -z "$chosen" ]] && exit 0
 
 case $chosen in
     $toggle)
-		playerctl --player="$player" play-pause
+	    playerctl --player="$player" play-pause
         ;;
     $next)
-		playerctl --player="$player" next
+	    playerctl --player="$player" next
         ;;
     $prev)
         playerctl --player="$player" previous
+        
+        exec "$0" 0
         ;;
     $seekminus)
-		playerctl --player="$player" position 15-
-        ;;
+	    playerctl --player="$player" position 15-
+	
+	    exec "$0" 1
+	    ;;
     $seekplus)
-		playerctl --player="$player" position 15+
+	    playerctl --player="$player" position 15+
+
+	    exec "$0" 3
         ;;
     $switch)
         ~/.config/rofi/media-player/switch-target-player.sh 1 
         
-        exec "$0"  # to start this script again
+        exec "$0" 5  # to start this script again
         ;;
     $shuffle)
         playerctl --player="$player" shuffle Toggle
-        ;;
+        
+	    exec "$0" 6
+	    ;;
     $repeat)
         modes=("None" "Playlist" "Track")
 
@@ -135,28 +136,31 @@ case $chosen in
 
         playerctl --player="$player" loop "${modes[$next_index]}"
 
-        exec "$0"  # to start this script again
+        exec "$0" 7  # to start this script again
         ;;
-    $spotify)
+    $spotify|s)
         spotify-launcher
         ;;
-    $vlc)
+    $youtube|y)
+        # chromium --app=https://youtube.com
+        gtk-launch youtube
+	    ;;
+    $kick|k)
+        # chromium --app=https://kick.com
+        gtk-launch kick
+	    ;;
+    $netflix|n)
+        # chromium --app=https://netflix.com/browse
+        gtk-launch netflix
+	    ;;
+    $aprime|a)
+        # chromium --app=https://primevideo.com/tv
+        gtk-launch primevideo
+	    ;;
+    $vlc|v) # vlc
         vlc
-        ;;
-    $youtube)
-        chromium --app=https://youtube.com
-        ;;
-    $kick)
-        chromium --app=https://kick.com
-        ;;
-    $netflix)
-        chromium --app=https://netflix.com/browse
-        ;;
-    $aprime)
-        chromium --app=https://primevideo.com/tv
         ;;
     "Q")
         i3-msg '[instance="'"$player"'"] kill'
-        ;;
-    
+        ;; 
 esac

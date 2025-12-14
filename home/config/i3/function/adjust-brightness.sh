@@ -14,9 +14,7 @@ fi
 
 # --- Get Current Brightness for Notification ---
 # Important: We need a tool that outputs just a number (0-100 or 0-max).
-# You confirmed `xbacklight -get | grep -P -o "^\\d{1,3}"` works well.
-# If `brightnessctl get` outputs just a number, you could use that instead.
-CURRENT_BRIGHTNESS=$(xbacklight -get | grep -P -o "^\\d{1,3}")
+CURRENT_BRIGHTNESS=$(brightnessctl -m | cut -d, -f4 | tr -d '%')
 
 # --- Send Dunst Notification ---
 # The -r "556" replaces the previous notification of the same ID

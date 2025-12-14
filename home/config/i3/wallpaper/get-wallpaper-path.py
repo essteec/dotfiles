@@ -40,5 +40,4 @@ if sys.argv[1] == '1':
     with open(f'/home/{user}/.config/i3/wallpaper/wallpaper-paths.json', 'w') as f:
         json.dump(y, f)
 
-    
 print(wp_path + wps[index])

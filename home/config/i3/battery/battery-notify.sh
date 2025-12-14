@@ -12,7 +12,8 @@ sleep 60
 
 # Main Shell Variables
 LOW_BAT_THRESHOLD=20
-SOUND_FILE="$HOME/.config/i3/meow.wav"
+SOUND_FILE="$HOME/.config/i3/battery/low_battery-dididit.wav"
+# SOUND_FILE="/usr/share/sounds/freedesktop/stereo/service-logout.oga"
 
 # Wrapper loop
 while true; do

@@ -2,7 +2,7 @@
 
 | Shortcut | Action |
 |----------|--------|
-| XF86AudioRaiseVolume / Lower / Mute | Adjust system volume up/down/mute. |
+| XF86AudioRaiseVolume / Lower | Adjust system volume up/down. |
 | Shift+XF86AudioMute | Switch audio output device. |
 | XF86AudioMicMute | Toggle microphone mute with notification. |
 | XF86MonBrightnessUp / Down | Increase/decrease screen brightness. |
@@ -14,7 +14,7 @@
 
 | Shortcut | Action |
 |----------|--------|
-| Super+Return | Open `kitty` terminal showing `neofetch`. |
+| Super+Return | Open `kitty` terminal showing `fastfetch`. |
 | Super+t | Open a floating `kitty` terminal. |
 | Super+q | Close the currently focused window. |
 | Super+Shift+q | Force‑close a clicked window with `xkill`. |
@@ -40,9 +40,10 @@
 |----------|--------|
 | Super+Tab | Switch to next workspace. |
 | Super+Shift+Tab | Switch to previous workspace. |
-| Super+1..0 | Switch to workspace 1–10. |
+| Super+`1..0= | Switch to workspace `, 1–10 or =. |
 | Super+Shift+1..0 | Move focused window to workspace 1–10. |
 | Super+n | Create and switch to a new named workspace. |
+| Super+Shift+n | Move window to named workspace |
 | Super+Shift+minus | Move focused window to scratchpad. |
 | Super+minus | Show first scratchpad window. |
 
@@ -68,7 +69,8 @@
 | Alt+XF86Calculator | Copy last screenshot file to clipboard. |
 | Super+apostrophe | Toggle Picom compositor. |
 | Super+p | Change wallpaper randomly. |
-| Super+Shift+p | Change theme and wallpaper. |
+| Super+Shift+p | Change theme. |
+| Super+Alt+p   | Random wallpaper from all themes |
 | Super+Shift+c | Reload i3 config. |
 | Super+Shift+r | Restart i3 without closing sessions. |
 | Super+Shift+e | Show exit confirmation and log out of i3. |

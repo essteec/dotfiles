@@ -46,6 +46,6 @@ element {
 element selected {
     background-color: linear-gradient(to right, #79107cff, #f9e2af);
     text-color: #181825;
-    border: 1px;
+    border: 2px;
     border-color: #79107cff;
 }
