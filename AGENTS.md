@@ -8,7 +8,7 @@ The following modern CLI tools and utilities are available on the system for ter
 
 ## Project Structure & Repository Context
 
-- `.extra/`: Fully ignored from dotfiles sync and git tracking. It serves as a local reference/documentation store for agents to scan directly (e.g., wiki clones, reference guides) so agents can work strictly within this repo instead of touching the live home folder.
+- `.extra/`: Fully ignored from dotfiles sync and git tracking. It serves as a local reference/documentation store for agents to scan directly (e.g., wiki clones, reference guides) so feel free to search this folders if necessary.
 - `installed-apps.md`: Full list of installed packages on the system.
 - `colors.md`: Central reference of color and theme options across configs. Agents can read this to quickly adapt or create matching color themes for other apps.
 - `home/`: Mirrors the user's original `$HOME` directory and stores all tracked dotfiles:
