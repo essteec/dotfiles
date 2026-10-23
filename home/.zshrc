@@ -1,0 +1,166 @@
+# =============================================================================
+#  ___  ___  _  _  ___  ___ 
+# | _ \|_ _|| || || __|| _ \   Arch Linux + Hyprland ZSH Config
+# |   / | | | |__| |__ |   /   Optimized for Dev & Aesthetics
+# |_|_\|___||____||___||_|_\   
+#
+# =============================================================================
+
+# --- P10K INSTANT PROMPT -----------------------------------------------------
+# Instantly shows a prompt even if plugins are slow to load. 
+# KEEP THIS AT THE VERY TOP.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# --- PATH CONFIGURATION ------------------------------------------------------
+# Export PATHs early so plugins can find binaries.
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/opt/cuda/bin:$PATH
+
+# If you use pyenv (Python version manager)
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+
+# cuda 
+export LD_LIBRARY_PATH=/opt/cuda/lib64:$LD_LIBRARY_PATH
+
+# --- OH-MY-ZSH SETUP ---------------------------------------------------------
+export ZSH="$HOME/.oh-my-zsh"
+
+# THEME SELECTION
+# Option A: Powerlevel10k (Fast, detailed, industry standard)
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Option B: Starship (Modern, Rust-based, minimal, cross-shell)
+# To use: comment out ZSH_THEME above, install starship (pacman -S starship), 
+# and uncomment the line below (and add 'eval "$(starship init zsh)"' at the end of file).
+# ZSH_THEME="robbyrussel" 
+
+# --- PLUGINS -----------------------------------------------------------------
+# The "Holy Trinity" of ZSH plugins. 
+# Note: Do not add too many or startup becomes slow.
+plugins=( 
+    git                       # Git aliases (gaa, gcmsg, gp)
+    zsh-autosuggestions       # Gray ghost text completion based on history
+    zsh-syntax-highlighting   # Green/Red highlighting for valid/invalid commands
+    # docker                  # Docker aliases (optional)
+    # kubectl                 # Kubernetes aliases (optional)
+    # archlinux               # Arch specific aliases (optional)
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# --- AESTHETICS & STARTUP ----------------------------------------------------
+# This runs every time you open a terminal. 
+
+# Option A: Pokemon Colorscripts (The "unixporn" classic)
+# Requires: yay -S pokemon-colorscripts-git
+# pokemon-colorscripts --no-title -s -r
+
+# Option B: Fastfetch (Modern, faster replacement for Neofetch)
+# I recommend creating a config at ~/.config/fastfetch/config.jsonc
+# fastfetch 
+
+# Option C: Minimal (Just clear screen or nothing)
+# clear
+
+# --- ALIASES (The Power User Tools) ------------------------------------------
+
+# > Replacement Tools (Modern Rust/Go alternatives)
+# lsd = "LSDeluxe", adds icons and colors to ls. 
+# Alternative: 'eza' (pacman -S eza) is arguably more popular now.
+#alias ls='lsd'
+alias ls='eza'
+alias ll='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='eza --tree'
+alias tree='lsd --tree'
+
+# > File Manipulation
+# alias ..='cd ..'
+# alias ...='cd ../..'
+# alias .3='cd ../../..'
+alias cp="cp -i"   # Confirm before overwriting
+alias mv="mv -i"   # Confirm before overwriting
+alias rm="rm -i"   # Confirm before deleting
+
+# > Arch / Pacman / Yay
+# alias upd='sudo pacman -Syu'         # Update system
+# alias in='sudo pacman -S'            # Install package
+# alias rem='sudo pacman -Rns'         # Remove package + dependencies
+# alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # Remove orphaned packages
+
+# > Git (If you don't use the plugin)
+# alias g='git'
+# alias ga='git add'
+# alias gc='git commit -m'
+# alias gp='git push'
+
+# > Editor
+export EDITOR='vim'
+export BAT_PAGER="less -I"
+# alias v='nvim'
+# alias vim='nvim'
+# alias sv='sudo nvim'
+
+# --- CUSTOM FUNCTIONS --------------------------------------------------------
+# Place your helper functions here.
+
+# Example: Create a directory and cd into it instantly
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Example: Extract any archive format
+ex() {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xjf $1   	;;
+            *.tar.gz)    tar xzf $1   	;;
+            *.bz2)       bunzip2 $1   	;;
+            *.rar)       unrar x $1   	;;
+            *.gz)        gunzip $1    	;;
+	    *.tar.xz)	 tar xf $1    	;;
+	    *.tar.zst)	 tar xf $1	;;	
+            *.tar)       tar xf $1    	;;
+            *.tbz2)      tar xjf $1   	;;
+            *.tgz)       tar xzf $1   	;;
+            *.zip)       unzip $1     	;;
+            *.Z)         uncompress $1	;;
+            *.7z)        7z x $1      	;;
+	    *.deb)	 ar x $1      	;;
+            *)           echo "'$1' cannot be extracted via ex()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+# --- FINALIZATION ------------------------------------------------------------
+
+# Load Powerlevel10k config file (generated by `p10k configure`)
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Fix for GPG signing commits (if you use it)
+# export GPG_TTY=$(tty)
+
+# When a command entered prefixed one space it wont write in history
+setopt HIST_IGNORE_SPACE
+
+# Add path dotnet tools
+export PATH="$PATH:$HOME/.dotnet/tools"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"; fi
+
+# NVM configuration
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/share/nvm/nvm.sh" ] && \. "/usr/share/nvm/nvm.sh"
+[ -s "/usr/share/nvm/bash_completion" ] && \. "/usr/share/nvm/bash_completion"
+
+# Added by Antigravity CLI installer
+export PATH="$HOME/.local/bin:$PATH"

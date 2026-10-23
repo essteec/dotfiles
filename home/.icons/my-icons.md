@@ -1,0 +1,30 @@
+# This folder has these both cursor and app icons
+
+- Bibata-Modern-Ice
+- candy-icons
+- capitaine-cursors
+- capitaine-cursors-light
+- Hatter
+- Hatter-Blue
+- Hatter-Orange
+- Hatter-Pink
+- Hatter-Purple
+- Hatter-Red
+- Hatter-Slate
+- Hatter-Teal
+- Hatter-Yaru
+- Material-Black-Blueberry-Suru
+- Material-Black-Cherry-Suru
+- Material-Black-Plum-Suru*  -> Inherits=Sweet-Purple-Filled,candy-icons,Papirus-Dark,Adwaita
+- MB-Plum-Suru-GLOW
+- McMojave-cursors
+- Papirus
+- Papirus-Dark
+- phinger-cursors-dark*
+- phinger-cursors-light
+- Plum-Numix-2021
+- Sunity-cursors
+- Sunity-cursors-white
+- Sweet-cursors
+- Sweet-Purple-Filled
+- XCursor-Pro-Dark

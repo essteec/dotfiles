@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=YouTube
+Exec=chromium --app=https://youtube.com
+Icon=youtube
+Type=Application
+Categories=Video;Multimedia;Entertainment;
+StartupWMClass=YouTube-asfd

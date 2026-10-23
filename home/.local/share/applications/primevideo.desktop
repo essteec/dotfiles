@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Amazon Prime Video
+Exec=chromium --app=https://www.primevideo.com/storefront
+Icon=primevideo
+Type=Application
+Categories=Video;Multimedia;Entertainment;
+StartupWMClass=PrimeVideo

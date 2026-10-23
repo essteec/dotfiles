@@ -1,0 +1,60 @@
+configuration {
+    modi: "drun";
+    font: "JetBrainsMono Nerd Font Propo 14";
+    show-icons: true;
+    icon-theme: "Papirus-dark";
+    display-drun: "Applications";
+
+    location: 3;
+    yoffset: -200;
+    xoffset: -200;
+    
+    /* keybindings */
+    /*
+    hover-select: true;
+    me-select-entry: "Return";
+    me-accept-entry: "MousePrimary";
+    kb-accept-entry: "space,Return,KP_Enter";
+    kb-cancel: "Escape,Super_L+bracketright";
+    */
+}
+
+inputbar {
+    enabled: false;
+}
+
+* {
+    background-color: #181825; /* dark background */
+    text-color: #f5e0dc;       /* light text */
+    selected-text-color: #181825;
+    border-color: #79107cff;     /* pinkish border */
+}
+
+window {
+    width: 22%;
+    border: 2px;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+mainbox {
+    spacing: 15px;
+}
+
+listview {
+    columns: 1;
+    lines: 4;
+    spacing: 6px;
+    fixed-height: true;
+}
+
+element {
+    border-radius: 8px;
+    padding: 6px;
+}
+
+element selected {
+    background-color: linear-gradient(to right, #79107cff, #f9e2af);
+    text-color: #181825;
+    border: 2px;
+}

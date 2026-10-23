@@ -1,0 +1,311 @@
+{
+  // "height": 18, // default: auto
+  // "width": 1920, // default: auto
+  // "output": "*",
+
+  "spacing": 0, // space between modules default: 4
+  
+  "reload_style_on_change": true,
+  
+  "modules-left": [
+    "hyprland/workspaces",
+    "hyprland/window"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "mpris",
+    "custom/media",
+    "group/tray-drawer",
+    "group/sys-monitor",
+    "pulseaudio",
+    "backlight",
+    "battery",
+    "custom/power"
+    // "custom/notification"
+  ],
+  "group/tray-drawer": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 200,
+      "click-to-reveal": true,
+      "transition-left-to-right": false
+    },
+    "modules": [
+      "custom/expand",
+      "tray"
+    ]
+  },
+  "group/sys-monitor": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 400,
+      "click-to-reveal": true,
+      "transition-left-to-right": false
+    },
+    "modules": [
+      "custom/sys-monitor-expand",
+      "temperature",
+      "cpu",
+      "memory"
+    ]
+  },
+  "custom/expand": {
+    "format": "❮",
+    "cursor": true,
+    "tooltip": false
+  },
+  "custom/sys-monitor-expand": {
+    "format": "󰟌", // 󰲇,󰟌, 󰛸, 󰹣
+    "cursor": true,
+    "tooltip": true,
+    "tooltip-format": "System Monitor"
+  },
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{icon}",
+    "show-special": true,
+    "special-visible-only": true,
+    "on-scroll-up": "hyprctl dispatch workspace m-1",
+    "on-scroll-down": "hyprctl dispatch workspace m+1",
+    "format-icons": {
+      "1": "1", // , 󰈹, , 
+      "2": "2", // , , , 
+      "3": "3", // , , , , 󰨞
+      "4": "4", // , , , , 
+      // "5": "5",
+      // "6": "6",
+      // "7": "7",
+      // "8": "8",
+      // "9": "9",
+      // "10": "10",
+      "special": ""
+      // "default": ""
+    }
+  },
+  "hyprland/window": {
+      "format": " ❯ {}",
+      "format-alt": " ❯ ",
+      "tooltip-format": "{}",
+      "separate-outputs": true,
+      "on-click-right": "rofi -show drun",
+      "on-click-middle": "rofi -show window"
+      // "icon": true,
+      // "icon-size": 14
+  },
+  "clock": {
+    "interval": 15,
+    "format": "{:%a %d, %R}",
+    "format-alt": "{:%d.%m.%Y, %R}",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+        "mode": "month",
+        "format": {
+            "weeks": "<span color='#99ffdd'><b>{}</b></span>",
+            "months": "<b>{}</b>",
+            "days": "<span color='#acb0d0'><b>{}</b></span>",
+            "today": "<span color='#41a6b5'><b><u>{}</u></b></span>"
+        }
+    },
+    "on-click-right": "gnome-clocks",
+    "on-click-middle": "thunderbird -calendar"
+  },
+  "mpris": {
+    "format": "{title}",
+    "format-playing": "{title}",
+    "format-paused": "{title}",
+    "format-stopped": "{title}",
+    "tooltip-format": "{dynamic}",
+    "max-length": 36
+  },
+  "custom/media": {
+    "format": "󰎈",
+    "on-click": "media-player.sh",
+    "on-click-right": "playerctl next",
+    "on-click-middle": "playerctl previous"
+  },
+  "tray": {
+    "icon-size": 15,
+    "spacing": 12,
+    "cursor": true
+    // "icons": {
+    //   "blueman": ["bluetooth-active","bluetooth-disabled"]
+    // }
+  },
+  "temperature": {
+    "interval": 5,
+    // cpu temp: 
+    // cat /sys/devices/platform/coretemp.0/hwmon/hwmon8/temp1_input; 
+    // cat /sys/class/thermal/thermal_zone8/temp
+    
+    // "hwmon-path": "/sys/class/hwmon/hwmon8/temp1_input",
+    "thermal-zone": 8,
+    "format": "{icon} {temperatureC}°C",
+    "format-icons": ["","","","",""],
+    "critical-threshold": 90,
+    "on-click-right": "kitty -e my-nvidia-smi.sh"
+  },
+  "cpu": {
+    "interval": 4,
+    "format": " {usage}%", // 
+    // todo fix the tooltip, it fallback to default 
+    "tooltip-format": "Frequency: {avg_frequency}GHz / {max_frequency}GHz",
+    "states": {
+      "good": 30,
+      "warning": 70,
+      "critical": 90
+    },
+    "on-click-right": "kitty -e nvtop"
+  },
+  "memory": {
+    "format": " {percentage}%", // 
+    "interval": 4,
+    // memory: swapPercentage
+    "tooltip-format": "memory {percentage}%: {used} / {total}\nswap {swapPercentage}%: {swapUsed} / {swapTotal}",
+    "on-click-right": "kitty -e btop"
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "on-click": "pavucontrol",
+    "on-click-right": "pamixer -t",
+    "on-click-middle": "switch-volume-sink.sh",
+    "tooltip-format": "{volume}%",
+    "scroll-step": 0.5,
+    "max-volume": 120,
+    "format-muted": "",
+    "format-icons": {
+      "default": [
+        "", "", ""
+      ]
+    }
+  },
+  "backlight": {
+    "format": "{icon}",
+    "tooltip-format": "{percent}%",
+    "format-icons": [
+      // "󱃓", "󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"
+      // "󰫃", "󰫄", "󰫅", "󰫆", "󰫇", "󰫈"
+      // "󰃚", "󰃛", "󰃜", "󰃝", "󰃞", "󰃟", "󰃠"
+      "󰃜", "󰃛", "󰃞", "󰃝", "󰃟", "󰃠"//, "󰃚"
+    ],
+    "scroll-step": 0.5,
+    "on-click": "bluelight-menu.sh",
+    "on-click-right": "wall-picker.sh" // > wallpaper picker
+  },
+  "battery": {
+    "interval": 60,
+    "format": "{icon}",
+    "format-discharging": "{icon}",
+    "format-charging": "{icon}",
+    "format-plugged": "",
+    "format-full": "",
+    "format-icons": {
+      "charging": [
+        "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"
+      ],
+      "discharging": [
+        "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"
+      ]
+    },
+    "tooltip-format": "{capacity}%",
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "on-click": "battery-menu.sh", // < battery menu with performance and charge threshold options
+    // "on-click": "bash -c 'echo $PATH > /tmp/waybar-path.txt'",
+    // "on-click-right": "toggle-idle.sh", // > stay awake toggle
+    "states": {
+      "warning": 30,
+      "critical": 24,
+      "good": 82
+    }
+  },
+  "custom/power": {
+    "format": "",  // 󰣇  ⏻  󰌽   ⏼
+    "on-click": "swaync-client -t", // < notification center
+    "on-click-right": "power-menu.sh", // > power menu
+    "tooltip": false
+  }
+  // "custom/notification": {
+  //     "tooltip": false,
+  //     "format": "{icon}",
+  //     "format-icons": {
+  //           "notification": "a",
+  //           "none": "b",
+  //           "dnd-notification": "c",
+  //           "dnd-none": "d",
+  //           "inhibited-notification": "e",
+  //           "inhibited-none": "f",
+  //           "dnd-inhibited-notification": "g",
+  //           "dnd-inhibited-none": "h"
+  //     },
+  //     "return-type": "json",
+  //     "exec-if": "which swaync-client",
+  //     "exec": "swaync-client -swb",
+  //     "on-click": "swaync-client -t -sw",
+  //     "on-click-middle": "swaync-client -d -sw",
+  //     "on-click-right": "power-menu.sh",
+  //     "escape": true
+  // },
+  // "custom/hyprmenu" : {
+  //     "tooltip" : false,
+  //     "format" : "",
+  //     "on-click" : "swaync-client -t",
+  //     "menu": "on-click-right",
+  //     "menu-file": "~/.config/waybar/context/hyprmenu.xml",
+  //     "menu-actions": {
+  //       "action-1-1": "hyprctl dispatch exec '[float] alacritty -e htop'",
+  //       "action-1-2": "hyprctl dispatch exec '[float] alacritty -e nvtop'",
+  //       "action-1-3": "hyprctl dispatch exec '[float] alacritty -e pkexec powertop'",
+  //       "action-1-4": "hyprctl dispatch exec '[float] missioncenter'",
+
+  //       "action-2-1": "hyprctl dispatch exec nwg-look",
+  //       "action-2-2": "hyprctl dispatch exec qt6ct",
+  //       "action-2-3": "hyprctl dispatch exec kvantummanager",
+
+  //       "action-3-1": "hyprctl keyword monitor 'eDP-1,1920x1080@60, auto,1'",
+  //       "action-3-2": "hyprctl keyword monitor 'eDP-1,1920x1080@90, auto,1'",
+  //       "action-3-3": "hyprctl keyword monitor 'eDP-1,1920x1080@144,auto,1'",
+
+  //       "action-4-1": "hyprctl dispatch exec ~/.local/bin/caffeine shutdown",
+  //       "action-4-2": "hyprctl dispatch exec ~/.local/bin/caffeine handle-lid-switch",
+
+  //       "action-5": "hyprctl dispatch exec ~/.local/bin/powersafe",
+  //       "action-6": "hyprctl reload"
+  //   }
+  // }
+
+  // "network": {
+  //   "interface": "wlp0s20f3",
+  //   "format-icons": [
+  //     "󰤯", "󰤟", "󰤢", "󰤥", "󰤨"
+  //   ],
+  //   "format": "{icon} {essid}",
+  //   "format-wifi": "{icon}",
+  //   "format-ethernet": "󰀂",
+  //   "format-disconnected": "󰤮",
+  //   "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+  //   "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+  //   "tooltip-format-disconnected": "Disconnected",
+  //   "interval": 3,
+  //   "on-click": "nmgui"
+  // },
+  // "custom/screenrecording-indicator": {
+  //   "on-click": "~/.config/hypr/scripts/screenrecord",
+  //   "exec": "~/.config/waybar/scripts/indicator-record",
+  //   "signal": 8,
+  //   "return-type": "json"
+  // },
+  // "custom/idle-indicator": {
+  //   "on-click": "~/.config/hypr/scripts/toggle-idle",
+  //   "exec": "~/.config/waybar/scripts/indicator-idle",
+  //   "signal": 9,
+  //   "return-type": "json"
+  // },
+  // "disk": {
+  //   "interval": 30,
+  //   "format": "󱛟 {percentage_free}%",
+  //   "tooltip-format": "Used: {used}\nFree: {free}\nTotal: {total}",
+  //   "path": "/"
+  // },
+}

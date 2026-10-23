@@ -1,0 +1,25 @@
+local colors = {
+	rosewater = "rgb(e2d0cb)",
+	flamingo  = "rgb(f2cdcd)",
+	pink      = "rgb(f5c2e7)",
+	mauve     = "rgb(ab86d7)",
+	red       = "rgb(f38ba8)",
+	maroon    = "rgb(eba0ac)",
+	peach     = "rgb(fab387)",
+	yellow    = "rgb(f9e2af)",
+	green     = "rgb(a6e3a1)",
+	teal      = "rgb(94e2d5)",
+	sky       = "rgb(89dceb)",
+	sapphire  = "rgb(63b6db)",
+	blue      = "rgb(89b4fa)",
+	lavender  = "rgb(b4befe)",
+	text      = "rgb(cdd6f4)",
+	subtext1  = "rgb(bac2de)",
+	overlay0  = "rgb(6c7086)",
+	base      = "rgb(1e1e2e)",
+	mantle    = "rgb(181825)",
+	crust     = "rgb(11111b)",
+	passive   = "rgb(806aab)",
+}
+
+return colors

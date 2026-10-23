@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Kick
+Exec=chromium --app=https://kick.com/
+Icon=video-webm
+Type=Application
+Categories=Video;Multimedia;Entertainment;
+StartupWMClass=Kick

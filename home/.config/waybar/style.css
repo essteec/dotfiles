@@ -1,0 +1,146 @@
+/**
+ * ════════════════════════════════════════════════════════
+ *   Symphony by https://github.com/vyrx-dev
+ * ════════════════════════════════════════════════════════
+ */
+
+@import "./colors/Monokai_Soda_v2.css";
+
+* {
+  background-color: transparent;
+  color: @white-bright;
+  border: none;
+  border-radius: 0;
+	text-shadow: none;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+  font-weight: 600;
+}
+
+tooltip {
+  background: rgba(18, 18, 25, 0.90);
+  border: 1px solid @blue;
+  border-radius: 4px;
+  padding: 6px 10px;
+}
+
+menu {
+  background: rgba(18, 18, 25, 0.90);
+  border: 1px solid @blue;
+  padding: 8px 4px;
+}
+
+menu menuitem {
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+
+menu menuitem:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid @blue-bright;
+}
+
+window#waybar {
+  /* background: transparent; */
+  background: rgba(16, 16, 16, 0.75);
+}
+
+.modules-center {
+  padding: 0 80px;
+}
+
+#workspaces {
+  padding: 0 0px 0 3px;
+}
+
+#workspaces button {
+  all: initial;
+  padding: 0 3px;
+  margin: 0 2px;
+  min-width: 6px;
+  min-height: 6px;
+  opacity: 0.4;
+  transition: all 150ms ease;
+}
+
+#workspaces button.empty {
+  opacity: 0.25;
+}
+
+#workspaces button.active {
+  opacity: 1;
+  color: @magenta;
+  font-weight: 700;
+}
+
+#workspaces button.urgent {
+  opacity: 0.8;
+  color: @yellow-bright;
+}
+
+#workspaces button:hover {
+  opacity: 0.7;
+}
+
+#mpris.paused {
+  opacity: 0.4;
+}
+
+#disk,
+#memory,
+#battery,
+#network,
+#bluetooth,
+#pulseaudio,
+#backlight,
+#tray,
+#temperature,
+#custom-sys-monitor-expand,
+#cpu
+#custom-screenrecording-indicator,
+#custom-expand,
+#mpris,
+#clock,
+#custom-media,
+#custom-power {
+  padding: 0px 7px;
+  opacity: 1;
+  transition: opacity 150ms ease;
+}
+
+#custom-power {
+  padding: 0 10px 0 2px;
+}
+
+#clock {
+  font-weight: 700;
+}
+
+#custom-expand {
+  font-size: 12px;
+}
+
+#custom-screenrecording-indicator {
+  min-width: 12px;
+  font-size: 12px;
+}
+
+#custom-screenrecording-indicator.active {
+  color: @red-bright;
+}
+
+#battery.warning {
+  color: @yellow;
+}
+
+#battery.critical {
+  color: @red;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.5;
+  }
+}

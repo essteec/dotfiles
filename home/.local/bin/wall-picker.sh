@@ -1,0 +1,43 @@
+#!/bin/bash
+# Wallpaper picker - awww only (no theme changes)
+
+WALLPAPER_DIR="$HOME/Pictures/Wallpapers/"
+AWWW_PARAMS="--transition-fps 60 --transition-type=any --transition-duration=1"
+
+# Get focused monitor
+focused_monitor=$(hyprctl -j monitors | jq -r '.[] | select(.focused==true).name')
+: "${focused_monitor:=HDMI-A-1}"
+
+# Get wallpapers
+mapfile -d '' wallpapers < <(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" \) -print0)
+
+if [[ ${#wallpapers[@]} -eq 0 ]]; then
+  (action=$(notify-send -A "open=Get Wallpapers" --wait "No Wallpapers Found" "Add images to ~/Wallpapers to use dynamic theming") && [[ "$action" == "open" ]] && xdg-open "https://github.com/vyrx-dev/Wallpapers") &
+  exit 1
+fi
+
+# Build menu with thumbnails
+menu() {
+  for wallpaper in "${wallpapers[@]}"; do
+    printf "%s\x00icon\x1f%s\n" "$(basename "$wallpaper")" "$wallpaper"
+  done | sort
+}
+
+# Start awww if needed
+awww query &>/dev/null || awww-daemon --format xrgb
+
+# Show menu
+choice=$(menu | rofi -i -dmenu -config ~/.config/rofi/themes/wallpaper.rasi)
+[[ -z "$choice" ]] && exit 0
+
+# Apply wallpaper
+for wallpaper in "${wallpapers[@]}"; do
+  [[ "$(basename "$wallpaper")" == "$choice" ]] || continue
+  
+  awww img -o "$focused_monitor" "$wallpaper" $AWWW_PARAMS
+  notify-send -a "Wallpaper" "Wallpaper Changed" "$(basename "$wallpaper")" \
+    -r 559 -u low \
+    -h string:output:"${focused_monitor}" \
+    -h string:image-path:"${wallpaper}"
+  break
+done

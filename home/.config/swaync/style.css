@@ -1,0 +1,189 @@
+/* Monokai Soda v2 - Elegant Style */
+@define-color background rgba(30, 31, 46, 0.95);
+@define-color background-alpha rgba(25, 26, 40, 0.88);
+@define-color background-alt #121212;
+@define-color foreground #c4c4c4;
+@define-color accent #ab86d7;
+@define-color accent-alt #806aab;
+@define-color current-line #2d2d2d;
+@define-color comment #545454;
+
+* {
+  font-family: "Caskaydia Cove Nerd Font Propo";
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.notification-row {
+  transition: all 200ms ease;
+  outline: none;
+  margin-bottom: 4px;
+  border-radius: 8px;
+}
+
+.control-center .notification-row {
+  opacity: 0.85;
+  margin: 2px 0;
+}
+
+.notification-row:focus .notification,
+.notification-row:hover .notification {
+  background: @current-line;
+  border: 1px solid @accent;
+}
+
+.notification {
+  transition: all 200ms ease;
+  border-radius: 8px;
+  margin: 4px -2px;
+  background: @background-alt;
+  border: 1px solid @comment;
+  padding: 0;
+}
+
+.notification-content {
+  padding: 8px;
+}
+
+.close-button {
+  background: @current-line;
+  color: @foreground;
+  border-radius: 100%;
+  margin: 10px 4px;
+  min-width: 20px;
+  min-height: 20px;
+  border: none;
+}
+
+.close-button:hover {
+  background: @comment;
+}
+
+.summary {
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: @foreground;
+}
+
+.body {
+  margin-left: 8px;
+  font-size: 13px;
+  color: @foreground;
+}
+
+.control-center {
+  background: @background;
+  border-radius: 12px;
+  border: 1px solid @accent;
+  padding: 8px;
+  color: @foreground;
+}
+
+.widget-dnd {
+  margin: 4px;
+}
+.widget-dnd > switch {
+  background: @background-alt;
+  border: 1px solid @comment;
+  border-radius: 12px;
+}
+.widget-dnd > switch:checked {
+  background: @accent;
+}
+
+.widget-mpris {
+  padding: 4px;
+}
+.widget-mpris-player {
+  padding: 8px;
+  margin: 4px;
+  background-color: @background-alt;
+  border-radius: 8px;
+  border: 1px solid @comment;
+}
+
+/************** Buttons Grid Widget **************/
+.widget-buttons-grid flowboxchild > button {
+  border-radius: var(--border-radius);
+}
+
+.widget-buttons-grid flowboxchild > button.toggle:checked {
+  /* style given to the active toggle button */
+  background: @accent;
+  color: @foreground;
+}
+
+.widget-buttons-grid flowboxchild > button.toggle:hover {
+  /* style given to the toggle button hover */
+  background: @foreground;
+  color: @on_primary_container;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.widget-buttons-grid flowboxchild > button.toggle:hover:checked {
+  /* style given to the active toggle button hover */
+  background: @tertiary;
+  color: @on_tertiary;
+  transition: opacity 0.15s ease-in-out;
+}
+
+/* Volume and Backlight Sliders Widgets */
+
+.widget-volume,
+.widget-backlight {
+  background: @background-alt;
+  border: 1px solid @comment;
+  border-radius: 8px;
+  margin: 4px 16px;
+  padding-left: 16px;
+}
+
+.widget-volume trough,
+.widget-backlight trough {
+  border-radius: 20px;
+  background: @background;
+  box-shadow: 0px 0px 5px alpha(@foreground, 0.5);
+  margin-left: 10px;
+}
+
+.widget-volume trough highlight,
+.widget-backlight trough highlight {
+  padding: 5px;
+  background: @accent;
+  border-radius: 20px;
+  box-shadow: 0px 0px 3px alpha(@foreground, 1);
+  transition: all 0.4s ease;
+}
+
+.widget-volume trough highlight:hover,
+.widget-backlight trough highlight:hover {
+  background: @accent-alt;
+  transition: opacity 0.3s ease;
+}
+
+.widget-volume trough slider,
+.widget-backlight trough slider {
+  background: @accent-alt;
+  min-width: 2px;
+  min-height: 2px;
+}
+
+.widget-volume trough slider:hover,
+.widget-backlight trough slider:hover {
+  background: @accent;
+  transition: opacity 0.3s ease-in-out;
+  box-shadow: 0px 0px 3px alpha(@foreground, 1);
+}
+
+/* Keep notification icons square */
+/* Force icon size to avoid GTK4 upscaling PNG icons */
+.notification image,
+.notification-content image,
+.image {
+  border-radius: 0;
+}
+/* 
+.notification-default-action image {
+  border-radius: 0;
+} */

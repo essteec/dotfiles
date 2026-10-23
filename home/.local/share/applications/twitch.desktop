@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Twitch
+Exec=chromium --app=https://twitch.tv
+Icon=video-webm
+Type=Application
+Categories=Video;Multimedia;Entertainment;
+StartupWMClass=twitch

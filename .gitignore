@@ -1,0 +1,11 @@
+.vscode/
+.extra/
+
+# Editor & temp files
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+*.log
+todo.md

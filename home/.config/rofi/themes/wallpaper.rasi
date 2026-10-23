@@ -1,0 +1,201 @@
+/**
+ * Modern Wallpaper Picker Theme for Rofi
+ * Clean, sleek, frosted glass aesthetic
+ **/
+
+/*****----- Configuration -----*****/
+configuration {
+    show-icons:                 true;
+}
+
+/*****----- Global Properties -----*****/
+@import "~/.config/rofi/config.rasi"
+@import "~/.config/rofi/colors/monokaisodav2.rasi"
+
+* {
+    /* Mapped from monokaisodav2 */
+    bg-base:        @background;
+    bg-surface:     @background-alt;
+    bg-overlay:     @background-alt;
+    bg-card:        @background-alt;
+    bg-selected:    #262626ff;
+
+    accent:         @selected;
+    accent-dim:     #b965f030;
+    accent-glow:    #b965f050;
+
+    fg-primary:     @foreground;
+    fg-secondary:   #9090a8;
+    fg-muted:       #50505e;
+
+    border-subtle:  #ffffff12;
+    border-accent:  #b965f040;
+
+    /* Globals */
+    background-color:   transparent;
+    text-color:         @foreground;
+    font:               "Inter Medium 10";
+}
+
+/*****----- Window -----*****/
+window {
+    transparency:           "real";
+    fullscreen:             true;
+    width:                  100%;
+    height:                 100%;
+    background-color:       #0a0a0e99;
+    cursor:                 "default";
+}
+
+/*****----- Main Box -----*****/
+mainbox {
+    enabled:                true;
+    spacing:                24px;
+    margin:                 0px;
+    padding:                60px 80px;
+    background-color:       transparent;
+    children:               [ "inputbar", "listview" ];
+}
+
+/*****----- Input Bar -----*****/
+inputbar {
+    enabled:                true;
+    spacing:                0px;
+    margin:                 0px 35% 12px 35%;
+    padding:                14px 20px;
+    border:                 1px solid;
+    border-radius:          999px;
+    border-color:           @border-subtle;
+    background-color:       #ffffff22;
+    text-color:             @fg-primary;
+    children:               [ "entry" ];
+}
+
+entry {
+    enabled:                true;
+    background-color:       transparent;
+    text-color:             @fg-primary;
+    cursor:                 text;
+    placeholder:            " Search wallpapers...";
+    placeholder-color:      @fg-muted;
+    horizontal-align:       0.5;
+    vertical-align:         0.5;
+    font:                   "Inter Regular 11";
+}
+
+/*****----- Listview -----*****/
+listview {
+    enabled:                true;
+    columns:                8;
+    lines:                  3;
+    cycle:                  true;
+    dynamic:                true;
+    scrollbar:              false;
+    layout:                 vertical;
+    reverse:                false;
+    fixed-height:           true;
+    fixed-columns:          true;
+    flow:                   horizontal;
+
+    spacing:                12px;
+    margin:                 0px;
+    padding:                0px;
+    border:                 0px;
+    background-color:       transparent;
+    text-color:             @fg-primary;
+    cursor:                 "default";
+}
+
+/*****----- Elements -----*****/
+element {
+    enabled:                true;
+    spacing:                0px;
+    margin:                 0px;
+    padding:                0px 0px 10px 0px;
+    border:                 1px solid;
+    border-radius:          12px;
+    border-color:           @border-subtle;
+    background-color:       @bg-card;
+    text-color:             @fg-secondary;
+    orientation:            vertical;
+    cursor:                 pointer;
+}
+
+element normal.normal {
+    background-color:       @bg-card;
+    text-color:             @fg-secondary;
+    border-color:           @border-subtle;
+}
+
+element alternate.normal {
+    background-color:       @bg-card;
+    text-color:             @fg-secondary;
+    border-color:           @border-subtle;
+}
+
+element selected.normal {
+    background-color:       @bg-selected;
+    text-color:             @fg-primary;
+    border-color:           @accent;
+}
+
+element normal.urgent {
+    background-color:       @bg-card;
+    text-color:             @fg-secondary;
+}
+
+element selected.urgent {
+    background-color:       @bg-selected;
+    text-color:             @fg-primary;
+    border-color:           @accent;
+}
+
+element normal.active {
+    background-color:       @bg-card;
+    text-color:             @fg-secondary;
+}
+
+element selected.active {
+    background-color:       @bg-selected;
+    text-color:             @fg-primary;
+    border-color:           @accent;
+}
+
+/*****----- Element Icon -----*****/
+element-icon {
+    background-color:       transparent;
+    text-color:             inherit;
+    size:                   200px;
+    border-radius:          10px 10px 0px 0px;
+    cursor:                 inherit;
+}
+
+/*****----- Element Text -----*****/
+element-text {
+    background-color:       transparent;
+    text-color:             inherit;
+    highlight:              inherit;
+    cursor:                 inherit;
+    vertical-align:         0.5;
+    horizontal-align:       0.5;
+    font:                   "Inter Regular 9";
+    padding:                6px 8px 0px 8px;
+}
+
+/*****----- Message -----*****/
+error-message {
+    padding:                40px;
+    border:                 1px solid;
+    border-radius:          12px;
+    border-color:           @border-subtle;
+    background-color:       @bg-surface;
+    text-color:             @fg-primary;
+}
+
+textbox {
+    background-color:       transparent;
+    text-color:             @fg-primary;
+    vertical-align:         0.5;
+    horizontal-align:       0.0;
+    highlight:              none;
+}
