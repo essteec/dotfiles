@@ -97,7 +97,7 @@ case $chosen in
     $toggle)
 	    playerctl --player="$player" play-pause
 	    #if [[ $toggle  == "" ]]; then
-	    sleep 0.05 && exec "$0" 2
+	    sleep 0.15 && exec "$0" 2
 	    #fi
 	    ;;
     $next)
@@ -106,8 +106,8 @@ case $chosen in
 	    ;;
     $prev)
 	    playerctl --player="$player" previous
-    	exec "$0" 0
-        ;;
+	    exec "$0" 0
+            ;;
     $seekminus)
 	    playerctl --player="$player" position 15-
 	    exec "$0" 1
@@ -115,7 +115,7 @@ case $chosen in
     $seekplus)
 	    playerctl --player="$player" position 15+
 	    exec "$0" 3
-        ;;
+            ;;
     $switch)
         $BIN_DIR/switch-target-player.sh 1 
         exec "$0" 5  # to start this script again

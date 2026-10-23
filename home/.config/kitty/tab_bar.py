@@ -56,6 +56,7 @@ def draw_tab(
         # margin for first tab
         screen.cursor.bg = as_rgb(cur_color)
         screen.draw(" ")
+        screen.cursor.italic = tab.is_active
 
     screen.cursor.bg = as_rgb(cur_color)
     screen.cursor.fg = as_rgb(fg_color)
