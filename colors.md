@@ -159,6 +159,13 @@ selection_foreground #121212
 
 ## Other
 
+### Material Black Plum Suru
+
+Main Colors used in gradient:
+
+purple light: #a08fbf
+purple: #5a33a3
+
 ### Hyprland
 
 ```lua
