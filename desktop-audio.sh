@@ -3,7 +3,7 @@
 # desktop-audio.sh - Create desktop audio (max 30s) from a link or local media file
 #
 # Usage:
-#   ./desktop-audio.sh (-l <url> | -f <file>) [-ss <time>] [-t <sec>] [-to <time>] [-fi <sec>] [-fo <sec>] [ogg|wav]
+#   ./desktop-audio.sh (-l <url> | -f <file>) [-ss <time>] [-t <sec>] [-to <time>] [-fi <sec>] [-fo <sec>] [-o <path>] [ogg|wav]
 #   (Provide exactly 2 of: -ss, -t, -to)
 
 set -euo pipefail
@@ -11,7 +11,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 usage() {
-  echo "Usage: $0 (-l <url> | -f <file>) <-ss time | -t sec | -to time (pick 2)> [-fi sec] [-fo sec] [ogg|wav]" >&2
+  echo "Usage: $0 (-l <url> | -f <file>) <-ss time | -t sec | -to time (pick 2)> [-fi sec] [-fo sec] [-o path] [ogg|wav]" >&2
   exit 1
 }
 
@@ -26,6 +26,7 @@ t=""
 to=""
 fi_val=""
 fo_val=""
+out_name=""
 fmt="ogg"
 
 while [[ $# -gt 0 ]]; do
@@ -37,6 +38,7 @@ while [[ $# -gt 0 ]]; do
     -to) [[ $# -lt 2 ]] && usage; to="$2"; shift 2 ;;
     -fi|--fade-in|-fade-in|--fadein|-fadein) [[ $# -lt 2 ]] && usage; fi_val="$2"; shift 2 ;;
     -fo|--fade-out|-fade-out|--fadeout|-fadeout) [[ $# -lt 2 ]] && usage; fo_val="$2"; shift 2 ;;
+    -o|--output|-output) [[ $# -lt 2 ]] && usage; out_name="$2"; shift 2 ;;
     ogg|wav|--ogg|--wav) fmt="${1#--}"; shift ;;
     -fmt|--format) [[ $# -lt 2 ]] && usage; fmt="$2"; shift 2 ;;
     -h|--help) usage ;;
@@ -45,6 +47,11 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ -z "$mode" || -z "$src" ]] && usage
+
+# Infer format from -o if provided with an extension
+if [[ -n "$out_name" && "$out_name" =~ \.(ogg|wav)$ ]]; then
+  fmt="${BASH_REMATCH[1]}"
+fi
 
 # Validate format
 case "$fmt" in
@@ -129,9 +136,24 @@ else
   in_file="$src"
 fi
 
-base="$(basename "${in_file%.*}")"
-out_file="$ROOT_DIR/$base.$fmt"
-[[ "$in_file" -ef "$out_file" ]] && out_file="$ROOT_DIR/${base}-clip.$fmt"
+if [[ -n "$out_name" ]]; then
+  if [[ "$out_name" =~ \.(ogg|wav)$ ]]; then
+    out_file="$out_name"
+  else
+    out_file="${out_name}.$fmt"
+  fi
+  [[ -f "$out_file" && "$in_file" -ef "$out_file" ]] && {
+    echo "Error: output file cannot be identical to input file ($out_file)" >&2
+    exit 1
+  }
+else
+  base="$(basename "${in_file%.*}")"
+  out_file="$ROOT_DIR/$base.$fmt"
+  [[ "$in_file" -ef "$out_file" ]] && out_file="$ROOT_DIR/${base}-clip.$fmt"
+fi
+
+# Ensure output directory exists
+mkdir -p "$(dirname "$out_file")"
 
 # Step 2: Trim and convert with ffmpeg
 ffmpeg "${time_opts[@]}" -i "$in_file" -vn -map_metadata 0 "${filter_opts[@]}" "${opts[@]}" "$out_file"
