@@ -3,7 +3,7 @@
 # desktop-audio.sh - Create desktop audio (max 30s) from a link or local media file
 #
 # Usage:
-#   ./desktop-audio.sh (-l <url> | -f <file>) [-ss <time>] [-t <sec>] [-to <time>] [ogg|wav]
+#   ./desktop-audio.sh (-l <url> | -f <file>) [-ss <time>] [-t <sec>] [-to <time>] [-fi <sec>] [-fo <sec>] [ogg|wav]
 #   (Provide exactly 2 of: -ss, -t, -to)
 
 set -euo pipefail
@@ -11,7 +11,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 usage() {
-  echo "Usage: $0 (-l <url> | -f <file>) <-ss time | -t sec | -to time (pick 2)> [ogg|wav]" >&2
+  echo "Usage: $0 (-l <url> | -f <file>) <-ss time | -t sec | -to time (pick 2)> [-fi sec] [-fo sec] [ogg|wav]" >&2
   exit 1
 }
 
@@ -24,6 +24,8 @@ src=""
 ss=""
 t=""
 to=""
+fi_val=""
+fo_val=""
 fmt="ogg"
 
 while [[ $# -gt 0 ]]; do
@@ -33,6 +35,8 @@ while [[ $# -gt 0 ]]; do
     -ss) [[ $# -lt 2 ]] && usage; ss="$2"; shift 2 ;;
     -t) [[ $# -lt 2 ]] && usage; t="$2"; shift 2 ;;
     -to) [[ $# -lt 2 ]] && usage; to="$2"; shift 2 ;;
+    -fi|--fade-in|-fade-in|--fadein|-fadein) [[ $# -lt 2 ]] && usage; fi_val="$2"; shift 2 ;;
+    -fo|--fade-out|-fade-out|--fadeout|-fadeout) [[ $# -lt 2 ]] && usage; fo_val="$2"; shift 2 ;;
     ogg|wav|--ogg|--wav) fmt="${1#--}"; shift ;;
     -fmt|--format) [[ $# -lt 2 ]] && usage; fmt="$2"; shift 2 ;;
     -h|--help) usage ;;
@@ -59,15 +63,12 @@ count=0
 if [[ -n "$ss" && -n "$t" ]]; then
   start=$(to_sec "$ss")
   dur=$(to_sec "$t")
-  time_opts=(-ss "$ss" -t "$t")
 elif [[ -n "$ss" && -n "$to" ]]; then
   start=$(to_sec "$ss")
   dur=$(awk "BEGIN { print $(to_sec "$to") - $start }")
-  time_opts=(-ss "$ss" -to "$to")
 else
   dur=$(to_sec "$t")
   start=$(awk "BEGIN { print $(to_sec "$to") - $dur }")
-  time_opts=(-ss "$start" -to "$to")
 fi
 
 if ! awk "BEGIN { exit !($start >= 0 && $dur > 0 && $dur <= 30) }"; then
@@ -75,10 +76,54 @@ if ! awk "BEGIN { exit !($start >= 0 && $dur > 0 && $dur <= 30) }"; then
   exit 1
 fi
 
+time_opts=(-ss "$start" -t "$dur")
+
+# Configure fade-in and fade-out audio filters
+filter_opts=()
+af_filters=()
+
+if [[ -n "$fi_val" ]]; then
+  fi_sec=$(to_sec "$fi_val")
+  if ! awk "BEGIN { exit !($fi_sec > 0 && $fi_sec <= $dur) }"; then
+    echo "Error: fade-in duration ($fi_sec s) must be between 0 and clip duration ($dur s)." >&2
+    exit 1
+  fi
+  af_filters+=("afade=t=in:st=0:d=$fi_sec")
+fi
+
+if [[ -n "$fo_val" ]]; then
+  fo_sec=$(to_sec "$fo_val")
+  if ! awk "BEGIN { exit !($fo_sec > 0 && $fo_sec <= $dur) }"; then
+    echo "Error: fade-out duration ($fo_sec s) must be between 0 and clip duration ($dur s)." >&2
+    exit 1
+  fi
+  fo_start=$(awk "BEGIN { print $dur - $fo_sec }")
+  af_filters+=("afade=t=out:st=$fo_start:d=$fo_sec")
+fi
+
+if [[ -n "$fi_val" && -n "$fo_val" ]]; then
+  if ! awk "BEGIN { exit !($fi_sec + $fo_sec <= $dur) }"; then
+    echo "Error: combined fade durations ($fi_sec s + $fo_sec s) exceed clip duration ($dur s)." >&2
+    exit 1
+  fi
+fi
+
+if [[ ${#af_filters[@]} -gt 0 ]]; then
+  IFS=,
+  filter_opts=(-af "${af_filters[*]}")
+  unset IFS
+fi
+
 # Step 1: Resolve input file (download via yt-dlp or use local file)
 if [[ "$mode" == "link" ]]; then
-  in_file=$(yt-dlp -f "bestaudio/best" -x --audio-format best --progress \
-    -o "$ROOT_DIR/%(title)s.%(ext)s" --print after_move:filepath "$src")
+  tmp_file=$(mktemp)
+  trap 'rm -f "$tmp_file"' EXIT
+  yt-dlp -f "bestaudio/best" -x --audio-format best \
+    -o "$ROOT_DIR/%(title)s.%(ext)s" --print-to-file after_move:filepath "$tmp_file" "$src"
+  in_file=$(head -n 1 "$tmp_file" | tr -d '\r\n')
+  rm -f "$tmp_file"
+  trap - EXIT
+  [[ -z "$in_file" || ! -f "$in_file" ]] && { echo "Error: failed to download audio with yt-dlp" >&2; exit 1; }
 else
   [[ -f "$src" ]] || { echo "Error: file not found: $src" >&2; exit 1; }
   in_file="$src"
@@ -89,5 +134,5 @@ out_file="$ROOT_DIR/$base.$fmt"
 [[ "$in_file" -ef "$out_file" ]] && out_file="$ROOT_DIR/${base}-clip.$fmt"
 
 # Step 2: Trim and convert with ffmpeg
-ffmpeg -i "$in_file" "${time_opts[@]}" -vn -map_metadata 0 "${opts[@]}" "$out_file"
+ffmpeg "${time_opts[@]}" -i "$in_file" -vn -map_metadata 0 "${filter_opts[@]}" "${opts[@]}" "$out_file"
 echo "Saved: $out_file"

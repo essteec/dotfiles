@@ -85,14 +85,14 @@ Clones and updates offline reference wikis (Hyprland wiki, Waybar wiki, SwayNC d
 ```
 
 ### 4. `desktop-audio.sh` — Create Desktop Sound Clips
-Downloads audio via `yt-dlp` (`-l`) or uses a local media file (`-f`) and trims/converts it with `ffmpeg` into `.ogg` (default) or `.wav` (max 30 seconds, using any two of `-ss`, `-t`, `-to`):
+Downloads audio via `yt-dlp` (`-l`) or uses a local media file (`-f`) and trims/converts it with `ffmpeg` into `.ogg` (default) or `.wav` (max 30 seconds, using any two of `-ss`, `-t`, `-to`, with optional `-fi` / `-fo` fades):
 
 ```bash
 # Download from a link and extract a 5s .ogg clip starting at 00:10:
 ./desktop-audio.sh -l "https://www.youtube.com/watch?v=VIDEO_ID" -ss 00:10 -t 5
 
-# Trim a local file between two timestamps as .wav:
-./desktop-audio.sh -f song.mp3 -ss 01:00 -to 01:12 wav
+# Trim a local file between two timestamps as .wav with 1s fade-in and 2s fade-out:
+./desktop-audio.sh -f song.mp3 -ss 01:00 -to 01:12 -fi 1 -fo 2 wav
 ```
 
 ---
