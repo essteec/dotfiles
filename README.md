@@ -40,6 +40,7 @@ A modern, fast, and aesthetically cohesive desktop setup on **Arch Linux** power
 ├── sync.sh                 # Intelligent checksum sync tool ($HOME -> repo)
 ├── diff-delta.sh           # Delta-powered diff inspector (live $HOME vs repo)
 ├── pull-extra.sh           # Offline documentation & wiki updater (.extra/)
+├── desktop-audio.sh        # Desktop sound clip generator (yt-dlp + ffmpeg)
 ├── colors.md               # Central color palette reference (Monokai Soda v2)
 ├── installed-apps.md       # Complete package manifest
 └── AGENTS.md               # Context & guidelines for AI assistants
@@ -57,6 +58,7 @@ Synchronizes active configurations from your live `$HOME` directory into `home/`
 ```bash
 # Check what changed without modifying any files (dry-run):
 ./sync.sh --dry-run
+# or ./sync.sh -n
 
 # Run full sync:
 ./sync.sh
@@ -69,7 +71,7 @@ Synchronizes active configurations from your live `$HOME` directory into `home/`
 Quickly inspect syntax-highlighted diffs between any file in this repository and its counterpart in your live `$HOME` using `delta`:
 
 ```bash
-# Compare a specific config:
+# Compare a specific config after seen it with ./sync.sh -n:
 ./diff-delta.sh .config/waybar/config.jsonc
 
 # Accepts paths with or without 'home/' prefix:
@@ -81,6 +83,25 @@ Clones and updates offline reference wikis (Hyprland wiki, Waybar wiki, SwayNC d
 
 ```bash
 ./pull-extra.sh
+```
+
+### 4. `desktop-audio.sh` — Create Desktop Sound Clips
+Downloads audio via `yt-dlp` (`-l`) or uses a local media file (`-f`) and trims/converts it with `ffmpeg` into `.ogg` (default) or `.wav` (max 30 seconds, using any two of `-ss`, `-t`, `-to`, with optional `-fi` / `-fo` fades and `-o` custom output path):
+
+```bash
+# Download from a link and extract a 5s .ogg clip starting at 00:10:
+./desktop-audio.sh -l "https://www.youtube.com/watch?v=VIDEO_ID" -ss 00:10 -t 5
+
+# Trim a local file between two timestamps as .wav with 1s fade-in and 2s fade-out:
+./desktop-audio.sh -f song.mp3 -ss 01:00 -to 01:12 -fi 1 -fo 2 wav
+
+# Literal Usecase:
+./desktop-audio.sh -l 'https://www.youtube.com/watch?v=-6hxH80TCp8' -ss 0 -t 17.679 -fo 3 -o home/.local/share/sounds/steereeo/stereo/desktop-login-nfsu2
+# try/adjust settings optionally:
+./desktop-audio.sh -f 'Riders On The Storm (Fredwreck Remix).opus' -ss 0 -t 17.679 -fo 5 -o home/.local/share/sounds/steereeo/stereo/desktop-login-nfsu2
+# remove and copy actual spot after job done
+rm 'Riders On The Storm (Fredwreck Remix).opus'
+cp home/.local/share/sounds/steereeo/stereo/desktop-login-nfsu2.ogg ~/.local/share/sounds/steereeo/stereo/
 ```
 
 ---
