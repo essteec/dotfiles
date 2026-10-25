@@ -4,7 +4,7 @@
 
   "positionX": "right",
   "positionY": "top",
-  
+
   "control-center-positionX": "right",
   "control-center-positionY": "none",
 
@@ -16,31 +16,31 @@
   "control-center-margin-bottom": 12,
   "control-center-margin-right": 12,
   "control-center-margin-left": 12,
-  
+
   "timeout": 8,
   "timeout-low": 5,
   "timeout-critical": 0,
-  
+
   "fit-to-screen": true,
   "relative-timestamps": true,
-  
+
   "notification-window-width": 366,
-  
+
   "keyboard-shortcuts": true,
-  
+
   "notification-grouping": true,
-  
+
   "image-visibility": "when-available",
-  
+
   "transition-time": 100,
-  
+
   "hide-on-clear": false,
   "hide-on-action": true,
-  
-  "text-empty": "No Notifications",
-  
+
+  "text-empty": "󰂛  No Notifications",
+
   "script-fail-notify": true,
-  
+
   "scripts": {
     "example-script": {
       "app-name": "example.app.id",
@@ -54,7 +54,7 @@
       "run-on": "action"
     }
   },
-  
+
   "notification-visibility": {
     "volume": {
       "state": "transient",
@@ -67,7 +67,7 @@
       "summary": "Brightness"
     }
   },
-  
+
   "widgets": [
     "menubar",
     "backlight",
@@ -77,134 +77,136 @@
     "dnd",
     "notifications"
   ],
-  
+
   "widget-config": {
     "notifications": {
       "vexpand": true
     },
     "menubar": {
       "menu#appearance-buttons": {
-        "label": "Look & Feel", 
+        "label": "󰏘  Look & Feel",
         "position": "right",
-        "actions": [ 
+        "actions": [
           {
-            "label": "Gtk theme",
+            "label": "󰏘  Gtk theme",
             "command": "swaync-client -cp && nwg-look"
           },
           {
-            "label": "Kvantum theme",
+            "label": "󰔎  Kvantum theme",
             "command": "swaync-client -cp && kvantummanager"
           },
           {
-            "label": "Fonts",
+            "label": "󰛖  Fonts",
             "command": "swaync-client -cp && font-manager"
           },
           {
-            "label": "Qt theme",
+            "label": "󰒓  Qt theme",
             "command": "swaync-client -cp && qt6ct"
           },
           {
-            "label": "Icons",
+            "label": "󰀻  Icons",
             "command": "swaync-client -cp && gtk3-icon-browser"
           }
         ]
       },
       "menu#system-buttons": {
-        "label": "System",
+        "label": "󰒓  System",
         "position": "right",
-        "actions": [ 
+        "actions": [
           {
-            "label": "Power",
+            "label": "󰐥  Power",
             "command": "swaync-client -cp && power-menu.sh"
           },
           {
-            "label": "Battery",
+            "label": "󰁹  Battery",
             "command": "swaync-client -cp && battery-menu.sh"
           },
           {
-            "label": "Blue Light",
+            "label": "󰌵  Blue Light",
             "command": "swaync-client -cp && bluelight-menu.sh"
           },
           {
-            "label": "Wallpaper",
+            "label": "󰸉  Wallpaper",
             "command": "swaync-client -cp && wall-picker.sh"
           },
           {
-            "label": "Backup",
+            "label": "󰁯  Backup",
             "command": "swaync-client -cp && timeshift-launcher"
           }
         ]
       },
 
       "menu#launcher-buttons": {
-        "label": "Launchers",
+        "label": "󰀻  Launchers",
         "position": "left",
-        "actions": [ 
+        "actions": [
           {
-            "label": "Run App",
+            "label": "󰀻  Run App",
             "command": "swaync-client -cp && rofi -show drun"
           },
           {
-            "label": "Window Switcher",
+            "label": "󰖯  Window Switcher",
             "command": "swaync-client -cp && rofi -show window -selected-row $(hyprctl activeworkspace -j | jq -r .windows) -kb-accept-entry Alt_L -kb-row-down Alt_L+Tab -kb-row-up Shift-Tab -theme ~/.config/rofi/themes/style5_variant.rasi"
           },
           {
-            "label": "Emoji Pick",
+            "label": "󰞅  Emoji Pick",
             "command": "swaync-client -cp && rofi -modi emoji -show emoji -matching 'normal' -theme ~/.config/rofi/themes/launcher/style-1.rasi"
           },
           {
-            "label": "Clipboard",
+            "label": "󰅌  Clipboard",
             "command": "swaync-client -cp && cliphist list | rofi -dmenu -theme ~/.config/rofi/themes/style5_variant.rasi | cliphist decode | wl-copy"
           },
           {
-            "label": "Media Player",
+            "label": "󰎈  Media Player",
             "command": "swaync-client -cp && media-player.sh"
           }
         ]
       },
 
       "menu#sysmonitor-buttons": {
-        "label": "Monitor",
+        "label": "󰟌  Monitor",
         "position": "left",
-        "actions": [ 
+        "actions": [
           {
-            "label": "Mission Center",
+            "label": "󰍛  Mission Center",
             "command": "swaync-client -cp && missioncenter"
           },
           {
-            "label": "Btop",
+            "label": "󰻠  Btop",
             "command": "swaync-client -cp && kitty -e btop"
           },
           {
-            "label": "Nvidia-smi",
+            "label": "󰢮  Nvidia-smi",
             "command": "swaync-client -cp && kitty -e my-nvidia-smi.sh"
           },
           {
-            "label": "Nvtop",
+            "label": "󰍹  Nvtop",
             "command": "swaync-client -cp && kitty -e nvtop"
           },
           {
-            "label": "Htop",
+            "label": "  Htop",
             "command": "swaync-client -cp && kitty -e htop"
           }
         ]
       }
     },
     "inhibitors": {
-      "text": "Inhibitors",
-      "button-text": "Clear All",
+      "text": "󰅶  Inhibitors",
+      "button-text": "󰎟  Clear All",
       "clear-all-button": true
     },
     "title": {
-      "text": "Notifications",
+      "text": "󰂚  Notifications",
       "clear-all-button": true,
-      "button-text": "Clear All"
+      "button-text": "󰎟  Clear All"
     },
     "dnd": {
-      "text": "Do Not Disturb"
+      "text": "󰂛  Do Not Disturb"
     },
     "volume": {
       "label": "󰕾",
+      "expand-button-label": "󰅀",
+      "collapse-button-label": "󰅃",
       "show-per-app": true
     },
     "backlight": {
