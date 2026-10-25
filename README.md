@@ -40,6 +40,7 @@ A modern, fast, and aesthetically cohesive desktop setup on **Arch Linux** power
 ├── sync.sh                 # Intelligent checksum sync tool ($HOME -> repo)
 ├── diff-delta.sh           # Delta-powered diff inspector (live $HOME vs repo)
 ├── pull-extra.sh           # Offline documentation & wiki updater (.extra/)
+├── desktop-audio.sh        # Desktop sound clip generator (yt-dlp + ffmpeg)
 ├── colors.md               # Central color palette reference (Monokai Soda v2)
 ├── installed-apps.md       # Complete package manifest
 └── AGENTS.md               # Context & guidelines for AI assistants
@@ -81,6 +82,17 @@ Clones and updates offline reference wikis (Hyprland wiki, Waybar wiki, SwayNC d
 
 ```bash
 ./pull-extra.sh
+```
+
+### 4. `desktop-audio.sh` — Create Desktop Sound Clips
+Downloads audio via `yt-dlp` (`-l`) or uses a local media file (`-f`) and trims/converts it with `ffmpeg` into `.ogg` (default) or `.wav` (max 30 seconds, using any two of `-ss`, `-t`, `-to`):
+
+```bash
+# Download from a link and extract a 5s .ogg clip starting at 00:10:
+./desktop-audio.sh -l "https://www.youtube.com/watch?v=VIDEO_ID" -ss 00:10 -t 5
+
+# Trim a local file between two timestamps as .wav:
+./desktop-audio.sh -f song.mp3 -ss 01:00 -to 01:12 wav
 ```
 
 ---

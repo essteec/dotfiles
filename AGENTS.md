@@ -11,6 +11,10 @@ The following modern CLI tools and utilities are available on the system for ter
 - `.extra/`: Fully ignored from dotfiles sync and git tracking. It serves as a local reference/documentation store for agents to scan directly (e.g., wiki clones, reference guides) so feel free to search this folders if necessary.
 - `installed-apps.md`: Full list of installed packages on the system.
 - `colors.md`: Central reference of color and theme options across configs. Agents can read this to quickly adapt or create matching color themes for other apps.
+- `sync.sh`: Syncs tracked dotfiles from `$HOME` into `home/` using checksum comparison (`--dry-run` supported).
+- `diff-delta.sh`: Compares a repo dotfile against its live `$HOME` counterpart using `delta`.
+- `pull-extra.sh`: Clones/updates offline reference wikis and manpages inside `.extra/`.
+- `desktop-audio.sh`: Downloads (`yt-dlp`) or takes a local media file and trims/converts (`ffmpeg`) up to 30s into `.ogg` or `.wav`.
 - `home/`: Mirrors the user's original `$HOME` directory and stores all tracked dotfiles:
   - `.zshrc`: Shell configuration.
   - `.themes/`: Contains `my-themes.md` listing downloaded system themes.
