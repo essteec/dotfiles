@@ -4,7 +4,7 @@
 
 The setup is Arch Linux, Hyprland.
 
-The following modern CLI tools and utilities are available on the system for terminal: `rg`, `fd`, `jq`, `gh`, `ast-grep`, `bat`, `yq`, `uv`, and so on to explore.
+The following modern CLI tools and utilities are available on the system for terminal: `rg`, `fd`, `sed`, `jq`, `gh`, `ast-grep`, `bat`, `yq`, `uv`, and so on to explore.
 
 ## Project Structure & Repository Context
 
