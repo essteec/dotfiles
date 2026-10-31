@@ -65,4 +65,24 @@ if command -v curl >/dev/null 2>&1; then
 fi
 echo ""
 
+# 4. Update Kitty manpages and reference config
+KITTY_DIR="$EXTRA_DIR/kitty-man"
+mkdir -p "$KITTY_DIR"
+echo -e "${BOLD}Updating kitty-man reference docs...${RESET}"
+if command -v man >/dev/null 2>&1; then
+  man kitty > "$KITTY_DIR/manual.txt" 2>/dev/null && echo -e "  ${GREEN}✓${RESET} manual.txt updated" || true
+  man 5 kitty.conf > "$KITTY_DIR/manual5.txt" 2>/dev/null && echo -e "  ${GREEN}✓${RESET} manual5.txt updated" || true
+fi
+if [[ -f "/usr/share/doc/kitty/kitty.conf" ]]; then
+  cp "/usr/share/doc/kitty/kitty.conf" "$KITTY_DIR/kitty.conf" 2>/dev/null && echo -e "  ${GREEN}✓${RESET} kitty.conf updated" || true
+fi
+if [[ ! -f "$KITTY_DIR/info.md" ]]; then
+  cat <<'EOF' > "$KITTY_DIR/info.md"
+man kitty > manual.txt
+man 5 kitty.conf > manual5.txt
+kitty.conf from /usr/share/doc/kitty/kitty.conf
+EOF
+fi
+echo ""
+
 echo -e "${BOLD}${GREEN}All .extra references are up to date!${RESET}"
