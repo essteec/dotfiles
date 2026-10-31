@@ -168,7 +168,7 @@
   "pulseaudio": {
     "format": "{icon}",
     "on-click": "pavucontrol",
-    "on-click-right": "pamixer -t",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "on-click-middle": "switch-volume-sink.sh",
     "tooltip-format": "{volume}%",
     "scroll-step": 0.5,

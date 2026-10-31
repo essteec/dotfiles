@@ -1,63 +1,64 @@
 #!/bin/bash
 
-# export DISPLAY=:0
-# export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-# export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+SINK=@DEFAULT_AUDIO_SINK@
+SOURCE=@DEFAULT_AUDIO_SOURCE@
 
-# Default sink (output device)
-SINK=$(pactl get-default-sink)
-
-# Volume change logic
 case "$1" in
-    up)
-        pactl set-sink-volume "$SINK" +4%
-        ;;
-    down)
-        pactl set-sink-volume "$SINK" -5%
-        ;;
-    mute)
-        pactl set-sink-mute "$SINK" toggle
-        ;;
-    micmute)
-        wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-    
-        mic=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED && echo "Muted" || echo "Unmuted")
+up)
+    # -l 1.2 caps at 120%; drop it if you want to allow over-amplification
+    wpctl set-volume -l 1.2 "$SINK" 4%+
+    ;;
+down)
+    wpctl set-volume "$SINK" 5%-
+    ;;
+mute)
+    wpctl set-mute "$SINK" toggle
+    ;;
+micmute)
+    wpctl set-mute "$SOURCE" toggle
 
-        if [ "$mic" = "Muted" ]; then
-            icon="microphone-sensitivity-muted"
-        else
-            icon="microphone-sensitivity-high"
-        fi
+    if wpctl get-volume "$SOURCE" | grep -q MUTED; then
+        mic="Muted"
+        icon="microphone-sensitivity-muted"
+    else
+        mic="Unmuted"
+        icon="microphone-sensitivity-high"
+    fi
 
-        notify-send -a "System" "Microphone" "$mic" -i $icon \
-            -r "562" -u low -h string:x-canonical-private-synchronous:microphone
+    notify-send -a "System" "Microphone" "$mic" -i "$icon" \
+        -r "562" -u low -h string:x-canonical-private-synchronous:microphone
 
-        exit 0
-        ;;
-    *)
-        echo "Usage: volume-control.sh {up|down|mute}"
-        exit 1
-        ;;
+    exit 0
+    ;;
+*)
+    echo "Usage: volume-control.sh {up|down|mute|micmute}"
+    exit 1
+    ;;
 esac
 
 # Get volume & mute state
-VOLUME=$(pactl get-sink-volume "$SINK" | grep -oP '\d+%' | head -1 | tr -d '%')
-MUTED=$(pactl get-sink-mute "$SINK" | awk '{print $2}')
-if [ "$VOLUME" -lt 20 ]; then
-    VOLUME_ICON="audio-volume-low"
-elif [ "$VOLUME" -lt 60 ]; then
-    VOLUME_ICON="audio-volume-medium"
+# wpctl prints e.g. "Volume: 0.45" or "Volume: 0.45 [MUTED]"
+VOL_RAW=$(wpctl get-volume "$SINK")
+VOLUME=$(awk '{printf "%.0f", $2 * 100}' <<< "$VOL_RAW")
+
+BODY="Volume"
+
+if grep -q MUTED <<< "$VOL_RAW"; then
+    MUTED="yes"
+    BODY="$BODY muted"
+    VOLUME_ICON="audio-volume-muted"
 else
-    VOLUME_ICON="audio-volume-high"
+    MUTED="no"
+    if [ "$VOLUME" -lt 20 ]; then
+        VOLUME_ICON="audio-volume-low"
+    elif [ "$VOLUME" -lt 60 ]; then
+        VOLUME_ICON="audio-volume-medium"
+    else
+        VOLUME_ICON="audio-volume-high"
+    fi
 fi
 
 # Notification
-if [ "$MUTED" = "yes" ]; then
-    notify-send -a "System" "Volume muted" "$VOLUME" -i "audio-volume-muted" \
+notify-send -a "System" "$BODY" "$VOLUME" -i "$VOLUME_ICON" \
     -r "556" -u low -h string:x-canonical-private-synchronous:volume \
     -h int:value:"${VOLUME}"
-else
-    notify-send -a "System" "Volume" "$VOLUME" -i "$VOLUME_ICON" \
-    -r "556" -u low -h string:x-canonical-private-synchronous:volume \
-    -h int:value:"${VOLUME}"
-fi
