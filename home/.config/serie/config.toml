@@ -1,0 +1,83 @@
+# https://lusingander.github.io/serie/configurations/config-file-format.html
+[core.option]
+graph_antialias = true
+graph_style = "curved"
+
+[core.search]
+ignore_case = true
+
+[core.user_command]
+commands_1 = {
+  name = "delta",
+  type = "suspend",
+  commands = [
+    "sh", "-c",
+    "git --no-pager diff --color=always \"$1\" \"$2\" | delta --paging=always",
+    "serie",
+    "{{first_parent_hash}}",
+    "{{target_hash}}"
+  ]
+}
+
+[ui.list]
+scrolloff = 6
+
+# color theme below nothing else
+
+[graph.color]
+branches = [
+  "#f3005f",
+  "#97e023",
+  "#dfd561",
+  "#42a7cf",
+  "#b965f0",
+  "#00afff",
+  "#f5669c",
+  "#b0e05e",
+  "#e6be00",
+  "#57d1ea",
+]
+edge = "#00000000"
+background = "#00000000"
+
+[color]
+fg = "#c4c4c4"
+bg = "reset"
+list_selected_fg = "#f6f6e6"
+list_selected_bg = "#453366"
+list_ref_paren_fg = "#dfd561"
+list_ref_branch_fg = "#97e023"
+list_ref_remote_branch_fg = "#f3005f"
+list_ref_tag_fg = "#e6be00"
+list_ref_stash_fg = "#b965f0"
+list_head_fg = "#57d1ea"
+list_subject_fg = "reset"
+list_name_fg = "#42a7cf"
+list_hash_fg = "#dfd561"
+list_date_fg = "#0f7fcf"
+list_match_fg = "#121212"
+list_match_bg = "#e6be00"
+detail_label_fg = "#545454"
+detail_name_fg = "reset"
+detail_date_fg = "reset"
+detail_email_fg = "#00afff"
+detail_hash_fg = "reset"
+detail_ref_branch_fg = "#97e023"
+detail_ref_remote_branch_fg = "#f3005f"
+detail_ref_tag_fg = "#e6be00"
+detail_file_change_add_fg = "#97e023"
+detail_file_change_modify_fg = "#dfd561"
+detail_file_change_delete_fg = "#f3005f"
+detail_file_change_move_fg = "#b965f0"
+ref_selected_fg = "#f6f6e6"
+ref_selected_bg = "#453366"
+help_block_title_fg = "#97e023"
+help_key_fg = "#dfd561"
+virtual_cursor_fg = "#dcdcdc"
+status_input_fg = "reset"
+status_input_transient_fg = "#545454"
+status_info_fg = "#42a7cf"
+status_success_fg = "#97e023"
+status_warn_fg = "#dfd561"
+status_error_fg = "#f3005f"
+divider_fg = "#545454"
