@@ -6,7 +6,8 @@ ignore="-i JBL_Go_4"
 # ignore=""
 
 # Get all players
-PLAYERS=($(playerctl -l $ignore))
+PLAYERS=($(playerctl -l $ignore 2> /dev/null))
+
 TOTAL=${#PLAYERS[@]}
 
 # Store last used player in a cache file
@@ -32,7 +33,6 @@ else
     done
 
     # Move to next player (wrap around if needed)
-    
     NEXT=$(( ((CURRENT + $1)) % TOTAL ))
     
     # Save the new index

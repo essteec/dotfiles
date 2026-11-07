@@ -202,10 +202,10 @@
     "format-full": "",
     "format-icons": {
       "charging": [
-        "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"
+        "󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰢝", "󰢞", "󰂊", "󰂋", "󰂅"
       ],
       "discharging": [
-        "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"
+        "󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"
       ]
     },
     "tooltip-format": "{capacity}%",
@@ -213,7 +213,7 @@
     "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
     "on-click": "battery-menu.sh", // < battery menu with performance and charge threshold options
     // "on-click": "bash -c 'echo $PATH > /tmp/waybar-path.txt'",
-    // "on-click-right": "toggle-idle.sh", // > stay awake toggle
+    "on-click-right": "toggle-idle.sh", // > stay awake toggle
     "states": {
       "warning": 30,
       "critical": 24,
