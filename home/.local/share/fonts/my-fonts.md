@@ -25,6 +25,10 @@ This folder not have these fonts.
 
 This folder has these fonts
 
+- Cantarell x Nerd Font
+- Vipnagorgialla
+- CooperplateGothic
+
 ### SilentSDDM
 
 <https://github.com/RedHatOfficial/RedHatFont>
