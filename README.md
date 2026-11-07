@@ -17,6 +17,7 @@ A modern, fast, and aesthetically cohesive desktop setup on **Arch Linux** power
 | **Screen Lock & Idle** | [Hyprlock](https://github.com/hyprwm/hyprlock) / [Hypridle](https://github.com/hyprwm/hypridle) | Smooth lockscreen, idle inhibitor integration |
 | **Blue Light Filter** | [Hyprsunset](https://github.com/hyprwm/hyprsunset) | Controlled via custom `.local/bin/bluelight-menu.sh` |
 | **System Monitor** | [Btop](https://github.com/aristocratos/btop) | Custom Monokai Soda v2 theme matching terminal palette |
+| **Git Graph TUI** | [Serie](https://github.com/lusingander/serie) | Rich commit graph with custom Monokai Soda v2 theme & delta diffs |
 | **Icon Theme** | [Material-Black-Plum-Suru](https://github.com) | Selective fixes, symbolic apps, and custom status icons |
 | **Display Manager** | [SDDM](https://github.com/sddm/sddm) + [SilentSDDM](https://github.com/essteec/SilentSddm) | Silent theme with randomized and extra wallpaper backgrounds |
 
@@ -117,7 +118,7 @@ All user interfaces across the desktop are unified under a **Monokai Soda v2** p
 - **Accent Yellow**: `#e6be00`
 - **Accent Cyan / Blue**: `#42a7cf` / `#9f34d7`
 
-> Detailed color tokens for every application (Alacritty, Btop, Kitty, Rofi, Waybar, etc.) are documented in [colors.md](colors.md).
+> Detailed color tokens for every application (Alacritty, Btop, Kitty, Rofi, Serie, Waybar, etc.) are documented in [colors.md](colors.md).
 
 ---
 

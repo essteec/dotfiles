@@ -8,7 +8,7 @@ The following modern CLI tools and utilities are available on the system for ter
 
 ## Project Structure & Repository Context
 
-- `.extra/`: Fully ignored from dotfiles sync and git tracking. It serves as a local reference/documentation store for agents to scan directly (e.g., wiki clones, reference guides) so feel free to search this folders if necessary.
+- `.extra/`: Fully ignored from dotfiles sync and git tracking. It serves as a local reference/documentation store for agents to scan directly (e.g., wiki clones, reference guides) so feel free to search this folders if necessary. Also read "/usr/share/hypr/stubs/hl.meta.lua" for list of all hyprland config options.
 - `installed-apps.md`: Full list of installed packages on the system.
 - `colors.md`: Central reference of color and theme options across configs. Agents can read this to quickly adapt or create matching color themes for other apps.
 - `sync.sh`: Syncs tracked dotfiles from `$HOME` into `home/` using checksum comparison (`--dry-run` supported).
@@ -23,4 +23,4 @@ The following modern CLI tools and utilities are available on the system for ter
     - `fonts/`: Contains `my-fonts.md` listing downloaded fonts.
   - `.local/bin/`: Personal shell scripts (`*.sh`) used by Waybar, Hyprland, or executed manually in terminal. Standalone binaries and tools (like `agy`, `claude`, `uv`, `uvx`) are excluded; only personal `.sh` scripts are tracked.
   - `.icons/`: Only tracks custom modified or added files to the main icon theme (`Material-Black-Plum-Suru`) preserving directory hierarchy (e.g. `apps/symbolic/primevideo.svg`, `status/48/*`, `index.theme`), plus `my-icons.md` listing downloaded icon themes. Upstream full icon themes are not tracked.
-  - `.config/`: Dedicated config directories for user-customized tools (`hypr`, `waybar`, `kitty`, `rofi`, `swaync`, `alacritty`, `btop`, `gtk-3.0`, `gtk-4.0`, `sddm-theme`).
+  - `.config/`: Dedicated config directories for user-customized tools (`hypr`, `waybar`, `kitty`, `rofi`, `swaync`, `alacritty`, `btop`, `gtk-3.0`, `gtk-4.0`, `sddm-theme`, `serie`).
