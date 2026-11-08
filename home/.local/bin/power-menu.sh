@@ -31,13 +31,15 @@ case "$chosen" in
     "$shutdown")
         ans=$(confirm)
         if [[ "$ans" == "Yes" ]]; then
-            systemctl poweroff
+            hyprshutdown -t 'Shutting down...' --post-cmd 'systemctl poweroff'
+	    #systemctl poweroff
         fi
         ;;
     "$reboot")
         ans=$(confirm)
         if [[ "$ans" == "Yes" ]]; then
-            systemctl reboot
+            hyprshutdown -t 'Restarting...' --post-cmd 'systemctl reboot'
+	    #systemctl reboot
         fi
         ;;
     "$lock")

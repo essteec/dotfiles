@@ -45,6 +45,7 @@ hl.config({
 hl.config({
     misc = {
         force_default_wallpaper = -1,
+	disable_hyprland_logo = true,
         session_lock_xray = true,
         focus_on_activate = true,
     },
@@ -334,9 +335,14 @@ hl.bind(mainMod .. " + SHIFT + apostrophe", hl.dsp.exec_cmd("toggle-animations.s
 
 hl.workspace_rule({
     workspace = "special:scratchpad",
-    on_created_empty = "[float; size 780 420; move 2 480] kitty",
     persistent = false,
 })
+
+hl.on("workspace.created", function(ws)
+    if ws.name == "special:scratchpad" and ws.is_empty then
+        hl.exec_cmd("[float; size 780 420] kitty")
+    end
+end)
 
 -- Smart gaps / no gaps when only
 -- hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 0, gaps_in = 0 })

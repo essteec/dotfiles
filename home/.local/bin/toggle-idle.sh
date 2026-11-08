@@ -14,10 +14,10 @@ fi
 
 if pgrep -x hypridle >/dev/null; then
   pkill -x hypridle
-  notify-send -a "System" "Screen Lock" "Off - Display will stay on" -i "caffeine-cup-full"
+  notify-send -a "System" "Screen Lock" "Off - Display will stay on" -i "caffeine-cup-full" \
+      -r "569" -u low -h string:x-canonical-private-synchronous:awake
 else
   hypridle >/dev/null 2>&1 &
-  notify-send -a "System" "Screen Lock" "On - Display will sleep when inactive" -i "caffeine-cup-empty"
+  notify-send -a "System" "Screen Lock" "On - Display would not stay on" -i "caffeine-cup-empty" \
+      -r "569" -u low -h string:x-canonical-private-synchronous:awake
 fi
-
-# pkill -RTMIN+9 waybar for refresh custom waybar modules?

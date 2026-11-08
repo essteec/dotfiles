@@ -37,3 +37,4 @@ fi
 notify-send -a "System" "Brightness" "$CURRENT_BRIGHTNESS" -i "$BRIGHTNESS_ICON" \
     -r "557" -u low -h string:x-canonical-private-synchronous:brightness \
     -h int:value:"${CURRENT_BRIGHTNESS}"
+    
