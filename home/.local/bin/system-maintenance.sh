@@ -88,15 +88,39 @@ else
 fi
 
 # ---------- 4. $HOME/.cache prune ----------------------------------------
-announce "Pruning ~/.cache (unused > $CACHE_DAYS days)"
-cache_before=$(du -sh ~/.cache | cut -f1)
-echo "Before: $cache_before"
-if confirm "Clean ~/.cache now? [y/N]"; then
-  find ~/.cache -type f -mtime +$CACHE_DAYS -print -delete
-  find ~/.cache -type d -empty -print -delete
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}"
+CACHE_DIR="${CACHE_DIR%/}"
+announce "Pruning $CACHE_DIR (unused > $CACHE_DAYS days)"
+if [[ -d "$CACHE_DIR" ]]; then
+  cache_before=$(du -sh "$CACHE_DIR" | cut -f1)
+  echo "Before: $cache_before"
+  if confirm "Clean $CACHE_DIR now? [y/N]"; then
+    prune_expr=(
+      \( -path "$CACHE_DIR/yay" -o -path "$CACHE_DIR/paru" -o -name .git \) -prune
+    )
+    # Use -prune with -exec/-print0 instead of -delete because -delete implies -depth, which disables -prune.
+    find "$CACHE_DIR" "${prune_expr[@]}" \
+      -o -type f -mtime +"$CACHE_DAYS" -print -exec rm -f -- {} +
+
+    while true; do
+      removed=0
+      while IFS= read -r -d '' empty_dir; do
+        if rmdir -- "$empty_dir"; then
+          printf '%s\n' "$empty_dir"
+          removed=1
+        fi
+      done < <(
+        find "$CACHE_DIR" -mindepth 1 "${prune_expr[@]}" \
+          -o -type d -empty -print0
+      )
+      ((removed)) || break
+    done
+  fi
+  cache_after=$(du -sh "$CACHE_DIR" | cut -f1)
+  echo "After: $cache_after"
+else
+  echo "Cache directory $CACHE_DIR not found."
 fi
-cache_after=$(du -sh ~/.cache | cut -f1)
-echo "After: $cache_after"
 
 # ---------- 5. Journald rotate & vacuum ----------------------------------
 announce "Vacuuming journald logs ($JOURNAL_RETAIN)"

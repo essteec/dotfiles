@@ -1,168 +1,164 @@
-# =============================================================================
-#  ___  ___  _  _  ___  ___ 
-# | _ \|_ _|| || || __|| _ \   Arch Linux + Hyprland ZSH Config
-# |   / | | | |__| |__ |   /   Optimized for Dev & Aesthetics
-# |_|_\|___||____||___||_|_\   
-#
-# =============================================================================
-
-# --- P10K INSTANT PROMPT -----------------------------------------------------
-# Instantly shows a prompt even if plugins are slow to load. 
-# KEEP THIS AT THE VERY TOP.
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# --- PATH CONFIGURATION ------------------------------------------------------
-# Export PATHs early so plugins can find binaries.
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/opt/cuda/bin:$PATH
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/cuda/bin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.local/share/pnpm/bin:/usr/lib/rustup/bin
 
-# If you use pyenv (Python version manager)
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
+# Add path dotnet tools
+export PATH="$PATH:$HOME/.dotnet/tools"
 
-# cuda 
-export LD_LIBRARY_PATH=/opt/cuda/lib64:$LD_LIBRARY_PATH
-
-# --- OH-MY-ZSH SETUP ---------------------------------------------------------
+# Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# THEME SELECTION
-# Option A: Powerlevel10k (Fast, detailed, industry standard)
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Option B: Starship (Modern, Rust-based, minimal, cross-shell)
 # To use: comment out ZSH_THEME above, install starship (pacman -S starship), 
 # and uncomment the line below (and add 'eval "$(starship init zsh)"' at the end of file).
-# ZSH_THEME="robbyrussel" 
+# ZSH_THEME="robbyrussel"
 
-# --- PLUGINS -----------------------------------------------------------------
-# The "Holy Trinity" of ZSH plugins. 
-# Note: Do not add too many or startup becomes slow.
-plugins=( 
-    git                       # Git aliases (gaa, gcmsg, gp)
-    zsh-autosuggestions       # Gray ghost text completion based on history
-    zsh-syntax-highlighting   # Green/Red highlighting for valid/invalid commands
-    # docker                  # Docker aliases (optional)
-    # kubectl                 # Kubernetes aliases (optional)
-    # archlinux               # Arch specific aliases (optional)
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+
+# Uncomment the following line to change the frequency the auto-updater is run (in days).
+zstyle ':omz:update' frequency 2
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+  git
+  # gh
+  # archlinux
+  docker
+  # docker-compose
+  fzf
+  sudo
+  extract
+  colored-man-pages
+  z
+  nvm
+  # uv
+  alias-finder
+  ufw
+  zsh-autosuggestions
+  # history-substring-search
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
 
-# --- AESTHETICS & STARTUP ----------------------------------------------------
-# This runs every time you open a terminal. 
 
-# Option A: Pokemon Colorscripts (The "unixporn" classic)
-# Requires: yay -S pokemon-colorscripts-git
-# pokemon-colorscripts --no-title -s -r
+# zsh configuration
+# When a command entered prefixed one space it wont write in history
+setopt HIST_IGNORE_SPACE
 
-# Option B: Fastfetch (Modern, faster replacement for Neofetch)
-# I recommend creating a config at ~/.config/fastfetch/config.jsonc
-# fastfetch 
+export HISTSIZE=12000
+export SAVEHIST=10000
 
-# Option C: Minimal (Just clear screen or nothing)
-# clear
+# User configuration
+# export MANPATH="/usr/local/man:$MANPATH"
 
-# --- ALIASES (The Power User Tools) ------------------------------------------
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
 
-# > Replacement Tools (Modern Rust/Go alternatives)
-# lsd = "LSDeluxe", adds icons and colors to ls. 
-# Alternative: 'eza' (pacman -S eza) is arguably more popular now.
-#alias ls='lsd'
-alias ls='eza'
-alias ll='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
-alias lt='eza --tree'
-alias tree='lsd --tree'
-
-# > File Manipulation
-# alias ..='cd ..'
-# alias ...='cd ../..'
-# alias .3='cd ../../..'
-alias cp="cp -i"   # Confirm before overwriting
-alias mv="mv -i"   # Confirm before overwriting
-alias rm="rm -i"   # Confirm before deleting
-
-# > Arch / Pacman / Yay
-# alias upd='sudo pacman -Syu'         # Update system
-# alias in='sudo pacman -S'            # Install package
-# alias rem='sudo pacman -Rns'         # Remove package + dependencies
-# alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # Remove orphaned packages
-
-# > Git (If you don't use the plugin)
-# alias g='git'
-# alias ga='git add'
-# alias gc='git commit -m'
-# alias gp='git push'
-
-# > Editor
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='nvim'
+# fi
 export EDITOR='vim'
 export BAT_PAGER="less -I"
+
+export ZSH_HIGHLIGHT_STYLES[comment]='none'
+
+# Compilation flags
+# export ARCHFLAGS="-arch $(uname -m)"
+
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
+# For a full list of active aliases, run `alias`.
+
+# ls
+alias ls='eza'
+alias ll='ls -lh'
+alias la='ls -A'
+alias lla='ls -lAh'
+alias lt='eza --tree'
+alias lta='eza -a --tree'
+alias tree='lsd --tree'
+alias treea='lsd -a --tree'
+
+# file manipulation
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+
 # alias v='nvim'
 # alias vim='nvim'
 # alias sv='sudo nvim'
 
-# --- CUSTOM FUNCTIONS --------------------------------------------------------
-# Place your helper functions here.
+# arch
+alias upd='sudo reflector --latest 16 --protocol https --sort rate --save /etc/pacman.d/mirrorlist; sleep 10; yay -Syu'
+# alias in='sudo pacman -S'            # Install package
+# alias rem='sudo pacman -Rns'         # Remove package + dependencies
+# alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # Remove orphaned packages
 
-# Example: Create a directory and cd into it instantly
+# functions
+
 mkcd() {
-    mkdir -p "$1" && cd "$1"
+  mkdir -p "$1" && cd "$1"
 }
 
-# Example: Extract any archive format
-ex() {
-    if [ -f $1 ] ; then
-        case $1 in
-            *.tar.bz2)   tar xjf $1   	;;
-            *.tar.gz)    tar xzf $1   	;;
-            *.bz2)       bunzip2 $1   	;;
-            *.rar)       unrar x $1   	;;
-            *.gz)        gunzip $1    	;;
-	    *.tar.xz)	 tar xf $1    	;;
-	    *.tar.zst)	 tar xf $1	;;	
-            *.tar)       tar xf $1    	;;
-            *.tbz2)      tar xjf $1   	;;
-            *.tgz)       tar xzf $1   	;;
-            *.zip)       unzip $1     	;;
-            *.Z)         uncompress $1	;;
-            *.7z)        7z x $1      	;;
-	    *.deb)	 ar x $1      	;;
-            *)           echo "'$1' cannot be extracted via ex()" ;;
-        esac
-    else
-        echo "'$1' is not a valid file"
-    fi
-}
-
-# --- FINALIZATION ------------------------------------------------------------
-
-# Load Powerlevel10k config file (generated by `p10k configure`)
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Fix black coloring when typing #asdfd asdf asdf in terminal 
-# https://github.com/kovidgoyal/kitty/issues/1716
-export ZSH_HIGHLIGHT_STYLES[comment]='none'
-
-# Fix for GPG signing commits (if you use it)
-# export GPG_TTY=$(tty)
-
-# When a command entered prefixed one space it wont write in history
-setopt HIST_IGNORE_SPACE
-
-# Add path dotnet tools
-export PATH="$PATH:$HOME/.dotnet/tools"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"; fi
-
-# NVM configuration
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/share/nvm/nvm.sh" ] && \. "/usr/share/nvm/nvm.sh"
-[ -s "/usr/share/nvm/bash_completion" ] && \. "/usr/share/nvm/bash_completion"
-
