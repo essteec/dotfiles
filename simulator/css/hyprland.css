@@ -1,0 +1,216 @@
+/* Hyprland Compositor, Wallpaper, Hyprsunset Filter & Window Rules */
+
+#desktop-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#desktop-wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: #0b0b12;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 350ms ease;
+}
+
+#hyprsunset-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2900;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background: transparent;
+  transition: background 180ms ease, opacity 180ms ease;
+}
+
+#hyprland-workspace {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Hyprland Window Container */
+.hypr-window {
+  position: absolute;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: rgba(12, 12, 16, 0.94);
+  opacity: 0.86;
+  box-shadow: 0 4px 18px rgba(26, 26, 26, 0.92);
+  border: 0 solid var(--hl-passive);
+  transition:
+    left 220ms cubic-bezier(0.23, 1, 0.32, 1),
+    top 220ms cubic-bezier(0.23, 1, 0.32, 1),
+    width 220ms cubic-bezier(0.23, 1, 0.32, 1),
+    height 220ms cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 150ms ease,
+    border-color 150ms ease;
+  animation: hypr-popin 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hypr-window.active {
+  opacity: 0.88;
+  border-color: var(--hl-mauve);
+}
+
+.hypr-window.floating {
+  border-width: 2px;
+  z-index: 120;
+}
+
+.hypr-window.floating.active {
+  z-index: 140;
+}
+
+.hypr-window.special-win {
+  z-index: 200;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.85);
+}
+
+.hypr-window.fullscreen {
+  opacity: 0.9 !important;
+  border-radius: 0 !important;
+  border-width: 0 !important;
+  z-index: 300 !important;
+}
+
+.hypr-window.opacity-override {
+  opacity: 1 !important;
+}
+
+.hypr-window.kitty-window {
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.hypr-window.no-anim {
+  transition: none !important;
+  animation: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+@keyframes hypr-popin {
+  from {
+    opacity: 0.4;
+    transform: scale(0.87);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Subtle Window Header (interactive drag/close/float bar on hover or floating) */
+.hypr-win-header {
+  height: 26px;
+  background: rgba(18, 18, 25, 0.88);
+  border-bottom: 1px solid rgba(159, 52, 215, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 11.5px;
+  color: var(--primary-foreground);
+  flex-shrink: 0;
+  cursor: grab;
+}
+
+.hypr-win-header:active {
+  cursor: grabbing;
+}
+
+.hypr-win-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+.hypr-win-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hypr-win-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-size: 11px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hypr-win-btn:hover {
+  background: rgba(185, 101, 240, 0.22);
+  color: var(--white-bright);
+}
+
+.hypr-win-btn.close:hover {
+  background: var(--red);
+  color: #ffffff;
+}
+
+.hypr-win-body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Floating Quick-Action Pill (bottom-left subtle helper for mouse-only users) */
+#sim-helper-pill {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  z-index: 450;
+  background: rgba(16, 16, 20, 0.82);
+  border: 1px solid rgba(159, 52, 215, 0.55);
+  border-radius: 8px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: var(--primary-foreground);
+  backdrop-filter: blur(8px);
+}
+
+#sim-helper-pill button {
+  background: #1a1a24;
+  color: var(--white-bright);
+  border: 1px solid #424242;
+  border-radius: 5px;
+  padding: 3px 8px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#sim-helper-pill button:hover {
+  border-color: var(--blue-bright);
+  color: var(--blue-bright);
+}
+
+#sim-helper-pill.minimized .helper-actions {
+  display: none;
+}

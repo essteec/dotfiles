@@ -1,0 +1,372 @@
+/* Waybar — 1:1 port of home/.config/waybar/style.css */
+
+#waybar {
+  position: relative;
+  z-index: 500;
+  width: 100%;
+  height: 26px;
+  background: rgba(16, 16, 16, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white-bright);
+  border: none;
+}
+
+#waybar .modules-left,
+#waybar .modules-center,
+#waybar .modules-right {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+#waybar .modules-left {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+#waybar .modules-center {
+  padding: 0 80px;
+  flex: 0 0 auto;
+}
+
+#waybar .modules-right {
+  flex: 1 1 0;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+/* Workspaces */
+#workspaces {
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 3px;
+}
+
+#workspaces button {
+  background: transparent;
+  border: none;
+  color: var(--white-bright);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0 3px;
+  margin: 0 2px;
+  min-width: 14px;
+  min-height: 18px;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+#workspaces button.empty {
+  opacity: 0.25;
+}
+
+#workspaces button.active {
+  opacity: 1;
+  color: var(--white-bright);
+  font-weight: 700;
+}
+
+#workspaces button.urgent {
+  opacity: 0.8;
+  color: var(--yellow-bright);
+}
+
+#workspaces button.special {
+  color: var(--blue-bright);
+}
+
+#workspaces button:hover {
+  opacity: 0.7;
+}
+
+/* Active Window Title */
+#window {
+  padding: 0 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 460px;
+  cursor: pointer;
+  color: var(--white-bright);
+  opacity: 0.92;
+  transition: opacity 150ms ease;
+}
+
+#window:hover {
+  opacity: 1;
+}
+
+/* Center Clock */
+#clock {
+  padding: 0 7px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Right Modules */
+#mpris,
+#custom-media,
+#custom-expand,
+#tray,
+#custom-sys-monitor-expand,
+#temperature,
+#cpu,
+#memory,
+#pulseaudio,
+#backlight,
+#battery,
+#custom-power {
+  padding: 0 7px;
+  opacity: 1;
+  transition: opacity 150ms ease, color 150ms ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  height: 100%;
+}
+
+#mpris {
+  max-width: 290px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#mpris.paused {
+  opacity: 0.4;
+}
+
+#mpris.stopped {
+  display: none;
+}
+
+#custom-expand {
+  font-size: 12px;
+}
+
+#custom-power {
+  padding: 0 10px 0 4px;
+}
+
+/* Drawers */
+.waybar-drawer {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+}
+
+.waybar-drawer-content {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  max-width: 0;
+  opacity: 0;
+  transition: max-width 250ms ease, opacity 200ms ease;
+}
+
+.waybar-drawer.sys-monitor .waybar-drawer-content {
+  transition: max-width 400ms ease, opacity 300ms ease;
+}
+
+.waybar-drawer.open .waybar-drawer-content {
+  max-width: 320px;
+  opacity: 1;
+}
+
+/* Tray */
+#tray {
+  gap: 12px;
+  padding: 0 7px;
+}
+
+.tray-item {
+  width: 15px;
+  height: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 120ms ease;
+}
+
+.tray-item:hover {
+  transform: scale(1.12);
+}
+
+.tray-item img,
+.tray-item svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+/* Battery & CPU & Temp states */
+#battery.warning {
+  color: var(--yellow);
+}
+
+#battery.critical {
+  color: var(--red);
+  animation: waybar-blink 1s infinite;
+}
+
+#temperature.critical,
+#cpu.critical {
+  color: var(--red);
+}
+
+#cpu.warning {
+  color: var(--yellow);
+}
+
+#cpu.good {
+  color: var(--white-bright);
+}
+
+#battery.idle-inhibited::after {
+  content: "󰅶";
+  font-size: 11px;
+  color: var(--yellow-bright);
+  margin-left: 3px;
+}
+
+@keyframes waybar-blink {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Waybar Tooltip (exact tooltip CSS from style.css) */
+#waybar-tooltip {
+  position: fixed;
+  z-index: 2500;
+  pointer-events: none;
+  background: rgba(18, 18, 25, 0.90);
+  border: 1px solid var(--blue);
+  border-radius: 4px;
+  padding: 6px 10px;
+  color: var(--white-bright);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+}
+
+#waybar-tooltip.hidden {
+  display: none;
+}
+
+#waybar-tooltip .wb-cal {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+#waybar-tooltip .wb-cal-month {
+  text-align: left;
+  font-weight: 700;
+  color: var(--white-bright);
+  margin-bottom: 4px;
+}
+
+#waybar-tooltip .wb-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 24px);
+  gap: 2px;
+  text-align: right;
+}
+
+#waybar-tooltip .wb-cal-hdr {
+  color: var(--white);
+  font-weight: 700;
+}
+
+#waybar-tooltip .wb-cal-day {
+  color: #acb0d0;
+  font-weight: 700;
+}
+
+#waybar-tooltip .wb-cal-day.muted {
+  opacity: 0.35;
+}
+
+#waybar-tooltip .wb-cal-day.today {
+  color: #41a6b5;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+/* Waybar GTK Context Menu (from context/hyprmenu.xml & waybar/style.css) */
+#waybar-context-menu {
+  position: fixed;
+  z-index: 2600;
+  background: rgba(18, 18, 25, 0.94);
+  border: 1px solid var(--blue);
+  border-radius: 4px;
+  padding: 8px 4px;
+  min-width: 190px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white-bright);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65);
+}
+
+#waybar-context-menu.hidden {
+  display: none;
+}
+
+.wb-menu-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  gap: 14px;
+}
+
+.wb-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--blue-bright);
+}
+
+.wb-menu-sep {
+  height: 1px;
+  background: rgba(159, 52, 215, 0.35);
+  margin: 5px 8px;
+}
+
+.wb-submenu {
+  display: none;
+  position: absolute;
+  left: calc(100% + 4px);
+  top: -8px;
+  background: rgba(18, 18, 25, 0.96);
+  border: 1px solid var(--blue);
+  border-radius: 4px;
+  padding: 8px 4px;
+  min-width: 170px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65);
+}
+
+.wb-menu-item:hover > .wb-submenu {
+  display: block;
+}

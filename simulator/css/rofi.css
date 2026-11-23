@@ -1,0 +1,439 @@
+/* Rofi — Exact ports of style5, style5_variant, launcher/style-1, power_menu, media_player, wallpaper */
+
+#rofi-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1800;
+}
+
+#rofi-backdrop.hidden {
+  display: none;
+}
+
+#rofi-backdrop.wallpaper-mode {
+  background: rgba(10, 10, 14, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+/* ─── Theme: style5.rasi & style5_variant.rasi ─── */
+.rofi-window.theme-style5,
+.rofi-window.theme-style5-variant {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 640px;
+  max-width: calc(100vw - 32px);
+  background: #0d0d0d;
+  color: #d0d0d0;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+}
+
+.rofi-window.theme-style5-variant {
+  width: 720px;
+}
+
+.rofi-style5-mainbox {
+  padding: 46px 26px 30px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.rofi-style5-inputbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 12px;
+}
+
+.rofi-style5-prompt-icon {
+  background: #b965f0;
+  color: #000000;
+  padding: 6px 14px;
+  border-radius: 3px;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.rofi-style5-entry {
+  flex: 1;
+  background: #202134;
+  color: #d0d0d0;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 10px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.rofi-style5-listview-wrap {
+  background: #1e1e2e;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 0 12px;
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.rofi-style5-listview {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: calc(5 * 44px + 4 * 8px);
+}
+
+.rofi-style5-scrollbar {
+  width: 3px;
+  margin: 4px 0 4px 2px;
+  border-radius: 3px;
+  background: #1a1a1a;
+  position: relative;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.rofi-style5-scrollbar-thumb {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #b965f0;
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+.rofi-style5-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background: #0d0d0d;
+  color: #d0d0d0;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.rofi-style5-item.selected {
+  background: #0d0d0d;
+  color: #f6f6e6;
+  border-color: #b965f0;
+}
+
+.rofi-style5-item .item-icon {
+  width: 26px;
+  text-align: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.rofi-style5-item .item-meta {
+  font-size: 12px;
+  opacity: 0.72;
+  font-style: italic;
+}
+
+/* ─── Theme: launcher/style-1.rasi (Emoji / Launcher) ─── */
+.rofi-window.theme-launcher-1 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  max-width: calc(100vw - 32px);
+  background: #0d0d0d;
+  color: #d0d0d0;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.78);
+}
+
+.rofi-l1-mainbox {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rofi-l1-inputbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px;
+}
+
+.rofi-l1-entry {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #d0d0d0;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+}
+
+.rofi-l1-listview {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  overflow: hidden;
+}
+
+.rofi-l1-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  color: #d0d0d0;
+}
+
+.rofi-l1-item.selected {
+  background: #b965f0;
+  color: #0d0d0d;
+  font-weight: 700;
+}
+
+.rofi-l1-switcher {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.rofi-l1-switcher button {
+  flex: 1;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 20px;
+  background: #1a1a1a;
+  color: #d0d0d0;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.rofi-l1-switcher button.selected {
+  background: #b965f0;
+  color: #0d0d0d;
+  font-weight: 700;
+}
+
+/* ─── Theme: power_menu.rasi (Power Menu & Battery Menu) ─── */
+.rofi-window.theme-power-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 0;
+  width: clamp(290px, 22vw, 390px);
+  background: #181825;
+  color: #f5e0dc;
+  border: 2px solid #79107c;
+  border-radius: 12px;
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.72);
+}
+
+.rofi-power-mainbox {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.rofi-power-message {
+  color: #f5e0dc;
+  font-size: 13.5px;
+  line-height: 1.4;
+  white-space: pre-line;
+}
+
+.rofi-power-listview {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rofi-power-item {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 6px 10px;
+  border: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  color: #f5e0dc;
+  flex-shrink: 0;
+}
+
+.rofi-power-item.selected {
+  background: transparent;
+  color: #f5e0dc;
+  border-color: #79107c;
+}
+
+/* ─── Theme: media_player.rasi (Media Player & Bluelight Menu) ─── */
+.rofi-window.theme-media-player {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 0;
+  width: 500px;
+  max-width: calc(100vw - 32px);
+  background: #11111b;
+  color: #eff1f5;
+  font-family: var(--font-mono);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.78);
+}
+
+.rofi-media-mainbox {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rofi-media-message {
+  padding: 16px;
+  background: #313244;
+  color: #eff1f5;
+  font-size: 12.5px;
+  text-align: center;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.rofi-media-listview {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 4px;
+  background: #11111b;
+}
+
+.rofi-media-item {
+  padding: 10px 4px;
+  margin: 2px;
+  border: 2px solid #79107c;
+  border-radius: 8px;
+  background: #313244;
+  color: #eff1f5;
+  text-align: center;
+  font-size: 19px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rofi-media-item.bluelight-item {
+  font-size: 13px;
+  padding: 12px 6px;
+}
+
+.rofi-media-item.selected {
+  background: #ab86d7;
+  color: #11111b;
+  font-weight: 700;
+}
+
+/* ─── Theme: wallpaper.rasi (Fullscreen Frosted Glass Grid) ─── */
+.rofi-window.theme-wallpaper {
+  position: fixed;
+  inset: 0;
+  padding: 60px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: var(--font-ui);
+}
+
+.rofi-wall-inputbar {
+  margin: 0 auto 12px auto;
+  width: min(520px, 50vw);
+  padding: 12px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.13);
+  display: flex;
+  align-items: center;
+}
+
+.rofi-wall-entry {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #d0d0d0;
+  text-align: center;
+  font-size: 14px;
+  outline: none;
+}
+
+.rofi-wall-entry::placeholder {
+  color: #8b8b9e;
+}
+
+.rofi-wall-listview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  overflow-y: auto;
+  padding-bottom: 16px;
+}
+
+.rofi-wall-item {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: #1a1a1a;
+  color: #9090a8;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+}
+
+.rofi-wall-item.selected,
+.rofi-wall-item:hover {
+  background: #262626;
+  color: #d0d0d0;
+  border-color: #b965f0;
+  transform: translateY(-2px);
+}
+
+.rofi-wall-thumb {
+  width: 100%;
+  height: 125px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.rofi-wall-label {
+  padding: 8px 8px 0 8px;
+  font-size: 11.5px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rofi-wall-theme-badge {
+  font-size: 10px;
+  text-align: center;
+  color: #b965f0;
+  margin-top: 2px;
+}
