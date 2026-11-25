@@ -6,7 +6,7 @@ A modern, fast, and aesthetically cohesive desktop setup on **Arch Linux** power
 
 Try the demo setup (just a imitation not an actual) directly in your browser (Waybar, SwayNC, Rofi themes, Hyprland Fibonacci/Golden layouts, Kitty, Btop, Wallpaper Picker, and Hyprlock):
 
-👉 **[Launch Live Demo](https://essteec.github.io/dotfiles/)** *(or open [`simulator/index.html`](simulator/index.html) directly in your browser)*
+👉 **[Launch Live Demo](https://essteec.github.io/dotfiles/simulator)** *(or open [`simulator/index.html`](simulator/index.html) directly in your browser)*
 
 ---
 
