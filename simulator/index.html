@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arch Linux + Hyprland (Monokai Soda v2) Simulator</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/avatar-default.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=Goldman:wght@400;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/waybar.css" />
+  <link rel="stylesheet" href="css/swaync.css" />
+  <link rel="stylesheet" href="css/rofi.css" />
+  <link rel="stylesheet" href="css/hyprland.css" />
+  <link rel="stylesheet" href="css/screens.css" />
+</head>
+<body>
+  <div id="desktop-root">
+    <div id="desktop-wallpaper"></div>
+
+    <!-- Waybar (1:1 port of home/.config/waybar/config.jsonc & style.css) -->
+    <header id="waybar">
+      <div class="modules-left">
+        <div id="workspaces"></div>
+        <div id="window"></div>
+      </div>
+
+      <div class="modules-center">
+        <div id="clock"></div>
+      </div>
+
+      <div class="modules-right">
+        <div id="mpris"></div>
+        <div id="custom-media" title="Media Controls">󰎈</div>
+
+        <div id="tray-drawer" class="waybar-drawer">
+          <div class="waybar-drawer-content">
+            <div id="tray">
+              <div class="tray-item" data-tray-app="nm-connection-editor" data-tooltip="nm-applet (Wi-Fi Connected)">
+                <img src="assets/icons/nm-signal-100.svg" alt="Wi-Fi" />
+              </div>
+              <div class="tray-item" data-tray-app="blueman-manager" data-tooltip="blueman-applet (Bluetooth Active)">
+                <img src="assets/icons/bluetooth-active.svg" alt="Bluetooth" />
+              </div>
+              <div class="tray-item" data-tray-app="easyeffects" data-tooltip="EasyEffects Audio">
+                <img src="assets/icons/audio-volume-high.svg" alt="EasyEffects" />
+              </div>
+              <div class="tray-item" data-tray-app="kdeconnect" data-tooltip="KDE Connect Indicator">
+                <img src="assets/icons/avatar-default.svg" alt="KDE Connect" />
+              </div>
+            </div>
+          </div>
+          <div id="custom-expand">❮</div>
+        </div>
+
+        <div id="sys-monitor-drawer" class="waybar-drawer sys-monitor">
+          <div class="waybar-drawer-content">
+            <div id="temperature"> 48°C</div>
+            <div id="cpu"> 14%</div>
+            <div id="memory"> 32%</div>
+          </div>
+          <div id="custom-sys-monitor-expand">󰟌</div>
+        </div>
+
+        <div id="pulseaudio"></div>
+        <div id="backlight">󰃟</div>
+        <div id="battery">󰂁</div>
+        <div id="custom-power"></div>
+      </div>
+    </header>
+
+    <!-- Hyprland Tiling Stage -->
+    <main id="hyprland-workspace"></main>
+
+    <!-- Subtle Simulator Helper Pill (for mouse-only access to Hyprland keybinds) -->
+    <div id="sim-helper-pill">
+      <button id="helper-toggle" title="Toggle Quick Keybind Bar"> Hypr</button>
+      <div class="helper-actions"></div>
+    </div>
+  </div>
+
+  <!-- Overlays -->
+  <div id="swaync-toast-stack"></div>
+  <aside id="swaync-control-center" class="hidden"></aside>
+  <div id="rofi-backdrop" class="hidden"></div>
+  <div id="hyprlock-screen" class="hidden"></div>
+  <div id="power-action-overlay" class="hidden"></div>
+  <div id="hyprsunset-overlay"></div>
+  <div id="waybar-tooltip" class="hidden"></div>
+  <div id="waybar-context-menu" class="hidden"></div>
+
+  <!-- Scripts -->
+  <script src="js/assets-manifest.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/layouts.js"></script>
+  <script src="js/swaync.js"></script>
+  <script src="js/waybar.js"></script>
+  <script src="js/rofi.js"></script>
+  <script src="js/apps.js"></script>
+  <script src="js/screens.js"></script>
+  <script src="js/keybinds.js"></script>
+</body>
+</html>

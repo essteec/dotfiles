@@ -9,3 +9,6 @@
 *.tmp
 *.log
 todo.md
+
+# Simulator local-only assets & scratch notes
+simulator/assets/songs/

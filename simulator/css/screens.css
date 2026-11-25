@@ -1,0 +1,629 @@
+/* Hyprlock Lockscreen + Simulated App Windows (Kitty, Btop, Spotify, Pavucontrol, etc.) */
+
+/* ═══════════════════ HYPRLOCK (home/.config/hypr/hyprlock.conf) ═══════════════════ */
+#hyprlock-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2800;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  transition: opacity 280ms linear;
+}
+
+#hyprlock-screen.hidden {
+  display: none;
+}
+
+.hyprlock-bg {
+  position: absolute;
+  inset: -20px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px) contrast(1.5) brightness(0.5);
+  z-index: 0;
+}
+
+.hyprlock-top-left {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  z-index: 5;
+  color: rgba(225, 225, 225, 0.8);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.hyprlock-top-left:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.hyprlock-top-right {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 5;
+  color: rgba(225, 225, 225, 0.8);
+  font-size: 24px;
+}
+
+.hyprlock-center-stage {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 20px 36px 20px;
+}
+
+.hyprlock-clock-block {
+  text-align: center;
+  margin-top: 4px;
+}
+
+.hyprlock-date {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(24px, 3.2vw, 40px);
+  color: rgba(175, 175, 175, 0.8);
+  margin-bottom: 4px;
+}
+
+.hyprlock-time {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(64px, 9vw, 120px);
+  line-height: 1;
+  color: rgba(225, 225, 225, 0.8);
+}
+
+/* Media Block matching hyprlock.conf positions */
+.hyprlock-media-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 480px;
+  max-width: 92vw;
+  min-height: 360px;
+}
+
+.hyprlock-album-blur {
+  position: absolute;
+  width: min(440px, 78vw);
+  height: min(440px, 46vh);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -44%);
+  border-radius: 40px;
+  object-fit: cover;
+  filter: blur(22px) brightness(0.75);
+  opacity: 0.78;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hyprlock-album-main {
+  position: relative;
+  z-index: 3;
+  width: min(260px, 34vh);
+  height: min(260px, 34vh);
+  object-fit: cover;
+  border-radius: 0;
+  margin-bottom: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.hyprlock-track-title {
+  position: relative;
+  z-index: 5;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(225, 225, 225, 0.9);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+  text-align: center;
+}
+
+.hyprlock-track-artist {
+  position: relative;
+  z-index: 5;
+  font-size: 15px;
+  color: rgba(225, 225, 225, 0.82);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+  margin-top: 2px;
+  text-align: center;
+}
+
+.hyprlock-controls {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 10px;
+}
+
+.hyprlock-ctrl-btn {
+  background: transparent;
+  border: none;
+  color: rgba(225, 225, 225, 0.85);
+  font-family: var(--font-sans);
+  font-size: 24px;
+  cursor: pointer;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+  transition: transform 120ms ease, color 120ms ease;
+}
+
+.hyprlock-ctrl-btn.play-btn {
+  font-size: 28px;
+}
+
+.hyprlock-ctrl-btn:hover {
+  transform: scale(1.15);
+  color: #ffffff;
+}
+
+.hyprlock-progress {
+  position: relative;
+  z-index: 5;
+  margin-top: 8px;
+  font-size: 14px;
+  color: rgba(225, 225, 225, 0.85);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.3px;
+}
+
+/* Password Input Field (430 x 60) */
+.hyprlock-input-wrap {
+  position: relative;
+  z-index: 6;
+  width: min(430px, 88vw);
+  height: 60px;
+}
+
+.hyprlock-input {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(175, 175, 175, 0.9);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  text-align: center;
+  outline: none;
+  backdrop-filter: blur(8px);
+  transition: border-color 180ms linear, background 180ms linear;
+}
+
+.hyprlock-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+.hyprlock-input.checking {
+  border-color: rgb(180, 180, 180);
+}
+
+.hyprlock-input.capslock {
+  border-color: rgb(255, 150, 75);
+}
+
+.hyprlock-input.fail {
+  border-color: #f3005f;
+}
+
+/* ═══════════════════ KITTY TERMINAL + TAB BAR ═══════════════════ */
+.kitty-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--primary-foreground);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.kitty-tabbar {
+  display: flex;
+  align-items: stretch;
+  height: 24px;
+  background: #1e1e2e;
+  overflow: hidden;
+  font-size: 11.5px;
+  flex-shrink: 0;
+}
+
+.kitty-logo-badge {
+  background: #9f34d7;
+  color: #fafafa;
+  font-weight: 700;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 0 100%);
+  padding-right: 14px;
+}
+
+.kitty-tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px 0 12px;
+  margin-left: -6px;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 8px 100%);
+  color: #1e1e2e;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.kitty-tab.active {
+  color: #11111b;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.kitty-terminal-body {
+  flex: 1;
+  padding: 8px 10px;
+  overflow-y: auto;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.kitty-terminal-body::-webkit-scrollbar {
+  width: 0;
+}
+
+.kitty-prompt-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.p10k-seg-os {
+  background: #42a7cf;
+  color: #121212;
+  padding: 0 6px;
+  font-weight: 700;
+  border-radius: 3px 0 0 3px;
+}
+
+.p10k-seg-dir {
+  background: #0f7fcf;
+  color: #f6f6e6;
+  padding: 0 8px;
+  font-weight: 700;
+}
+
+.p10k-seg-git {
+  background: #97e023;
+  color: #121212;
+  padding: 0 8px;
+  font-weight: 700;
+  border-radius: 0 3px 3px 0;
+}
+
+.kitty-cmd-input {
+  flex: 1;
+  min-width: 120px;
+  background: transparent;
+  border: none;
+  color: #f6f6e6;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+}
+
+/* ═══════════════════ BTOP (Monokai Soda v2) ═══════════════════ */
+.btop-ui {
+  background: #000000;
+  color: #c4c4c4;
+  height: 100%;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+
+.btop-topbar {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  color: #f6f6e6;
+  font-weight: 700;
+  padding: 0 4px;
+}
+
+.btop-box {
+  border: 1px solid #42a7cf;
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.btop-box-title {
+  color: #f6f6e6;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btop-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 76px;
+  padding-top: 6px;
+}
+
+.btop-bar {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  transition: height 250ms ease;
+}
+
+.btop-proc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.btop-proc-table th {
+  color: #f6f6e6;
+  text-align: left;
+  border-bottom: 1px solid #545454;
+  padding-bottom: 3px;
+}
+
+.btop-proc-table tr.selected {
+  background: #1a0a2e;
+  color: #f6f6e6;
+}
+
+.btop-proc-table td {
+  padding: 2px 4px;
+}
+
+/* ═══════════════════ MEDIA PLAYER ("Spotify" Generic Player) ═══════════════════ */
+.player-app {
+  background: #0a0a0d;
+  color: #c4c4c4;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.player-app-main {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 230px 1fr;
+}
+
+.player-now-playing {
+  background: #121218;
+  border-right: 1px solid #2d2d2d;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.player-cover {
+  width: 170px;
+  height: 170px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #424242;
+}
+
+.player-meta-title {
+  color: #f6f6e6;
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+}
+
+.player-meta-artist {
+  color: #bababa;
+  font-size: 12px;
+  text-align: center;
+}
+
+.player-playlist {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 10px 12px;
+  gap: 8px;
+}
+
+.player-search {
+  background: #1a1a22;
+  border: 1px solid #424242;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #f6f6e6;
+  font-family: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.player-search:focus {
+  border-color: #b965f0;
+}
+
+.player-track-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.player-track-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.player-track-row:hover {
+  background: #1a1a22;
+}
+
+.player-track-row.active {
+  background: #1a0a2e;
+  color: #b965f0;
+  font-weight: 700;
+}
+
+.player-transport-bar {
+  background: #14141a;
+  border-top: 1px solid #2d2d2d;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.player-transport-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.player-transport-btns button {
+  background: #1e1e26;
+  color: #f6f6e6;
+  border: 1px solid #424242;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.player-transport-btns button.active-state {
+  border-color: #97e023;
+  color: #97e023;
+}
+
+.player-transport-btns button.primary {
+  background: #9f34d7;
+  border-color: #b965f0;
+  padding: 5px 14px;
+}
+
+.player-seek-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+}
+
+/* ═══════════════════ GENERIC / FILLER UTILITY WINDOWS ═══════════════════ */
+.filler-app {
+  background: #121216;
+  color: #c4c4c4;
+  height: 100%;
+  padding: 14px 16px;
+  overflow-y: auto;
+  font-size: 12.5px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filler-card {
+  background: #181820;
+  border: 1px solid #353545;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.filler-card h4 {
+  color: #b965f0;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.filler-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.filler-btn {
+  background: #20202a;
+  color: #f6f6e6;
+  border: 1px solid #424242;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.filler-btn:hover {
+  border-color: #b965f0;
+}
+
+/* Serie Git Graph */
+.serie-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.serie-row.selected {
+  background: #453366;
+  color: #f6f6e6;
+}
+
+/* Power Action Overlay (Shutdown / Reboot / Suspend / Hibernate) */
+#power-action-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3200;
+  background: rgba(5, 5, 8, 0.94);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #f6f6e6;
+  font-size: 20px;
+}
+
+#power-action-overlay.hidden {
+  display: none;
+}

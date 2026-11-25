@@ -2,6 +2,12 @@
 
 A modern, fast, and aesthetically cohesive desktop setup on **Arch Linux** powered by **Hyprland**, styled with the custom **Monokai Soda v2** palette, and optimized for development and daily productivity.
 
+### 🌐 Interactive Desktop Demo
+
+Try the demo setup (just a imitation not an actual) directly in your browser (Waybar, SwayNC, Rofi themes, Hyprland Fibonacci/Golden layouts, Kitty, Btop, Wallpaper Picker, and Hyprlock):
+
+👉 **[Launch Live Demo](https://essteec.github.io/dotfiles/)** *(or open [`simulator/index.html`](simulator/index.html) directly in your browser)*
+
 ---
 
 ## 🖥️ Desktop Stack
@@ -38,6 +44,8 @@ A modern, fast, and aesthetically cohesive desktop setup on **Arch Linux** power
 │   │       └── sounds/        # Desktop notification sounds
 │   ├── .themes/            # Theme notes (my-themes.md)
 │   └── .zshrc              # Shell environment & aliases
+├── simulator/              # Raw HTML/CSS/JS interactive web simulator of this desktop
+├── .github/workflows/      # GitHub Pages deployment workflow for simulator/
 ├── sync.sh                 # Intelligent checksum sync tool ($HOME -> repo)
 ├── diff-delta.sh           # Delta-powered diff inspector (live $HOME vs repo)
 ├── pull-extra.sh           # Offline documentation & wiki updater (.extra/)

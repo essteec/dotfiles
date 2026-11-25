@@ -1,0 +1,98 @@
+/* Monokai Soda v2 + Hyprland Catppuccin Mocha + Google Fonts + CDN Nerd Symbols */
+
+@font-face {
+  font-family: "SymbolsNerdFontMono";
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@v3.3.0/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFontMono-Regular.ttf") format("truetype");
+  unicode-range: U+E000-F8FF, U+F0000-FFFFD;
+}
+
+:root {
+  --font-mono: "JetBrains Mono", "JetBrainsMono Nerd Font", "SymbolsNerdFontMono", monospace;
+  --font-sans: "Cantarell", "Cantarell Nerd Font", "SymbolsNerdFontMono", sans-serif;
+  --font-display: "Goldman", sans-serif;
+  --font-ui: "Inter", "Cantarell", "SymbolsNerdFontMono", sans-serif;
+
+  /* Monokai Soda v2 (Waybar / Terminal / Btop) */
+  --primary-background: #000000;
+  --primary-foreground: #c4c4c4;
+  --cursor: #dcdcdc;
+  --selection-background: #a0c1eb;
+  --selection-foreground: #121212;
+
+  --black: #121212;
+  --red: #f3005f;
+  --green: #97e023;
+  --yellow: #e6be00;
+  --blue: #9f34d7;
+  --magenta: #0f7fcf;
+  --cyanw: #42a7cf;
+  --white: #bababa;
+
+  --black-bright: #545454;
+  --red-bright: #f5669c;
+  --green-bright: #b0e05e;
+  --yellow-bright: #dfd561;
+  --blue-bright: #b965f0;
+  --magenta-bright: #00afff;
+  --cyan-bright: #57d1ea;
+  --white-bright: #f6f6e6;
+
+  --black-0: #2d2d2d;
+  --black-1: #424242;
+
+  /* SwayNC Tokens */
+  --swaync-bg-primary: rgba(13, 13, 13, 0.95);
+  --swaync-bg-card: #141414;
+  --swaync-bg-alt: #1a1a1a;
+  --swaync-bg-hover: #222222;
+  --swaync-border-subtle: #545454;
+  --swaync-border-muted: #424242;
+  --swaync-fg-primary: #f6f6e6;
+  --swaync-fg-secondary: #c4c4c4;
+  --swaync-fg-muted: #bababa;
+  --swaync-fg-dim: #545454;
+  --swaync-accent: #9f34d7;
+  --swaync-accent-bright: #b965f0;
+  --swaync-urgent: #f3005f;
+  --swaync-urgent-bright: #f5669c;
+
+  /* Rofi Monokai Soda v2 */
+  --rofi-bg: #0d0d0d;
+  --rofi-bg-alt: #1a1a1a;
+  --rofi-fg: #d0d0d0;
+  --rofi-selected: #b965f0;
+  --rofi-active: #b0e05e;
+  --rofi-urgent: #f5669c;
+
+  /* Hyprland Catppuccin Mocha Tokens */
+  --hl-mauve: #ab86d7;
+  --hl-passive: #806aab;
+  --hl-base: #1e1e2e;
+  --hl-mantle: #181825;
+  --hl-crust: #11111b;
+  --hl-text: #cdd6f4;
+  --hl-subtext1: #bac2de;
+  --hl-overlay0: #6c7086;
+
+  /* Material Black Plum Suru */
+  --plum-light: #a08fbf;
+  --plum-dark: #5a33a3;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000000;
+  color: var(--white-bright);
+  font-family: var(--font-mono);
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
